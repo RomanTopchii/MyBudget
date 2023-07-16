@@ -28,7 +28,7 @@ public class Account : DictionaryEntity
 
     public Account? LinkedAccount { get; set; }
 
-    public List<Account> Children { get; set; } = new List<Account>();
+    public virtual ICollection<Account> Children { get; set; } = new List<Account>();
 
     public virtual ICollection<TransactionItem> TransactionItems { get; set; } = new List<TransactionItem>();
 }

@@ -15,7 +15,7 @@ public class AccountType : DictionaryEntity
 
     public bool HasInitialBalance { get; set; }
 
-    public bool BalanceCalcFullTime { get; set; }
+    public bool CalcFullTimeBalance { get; set; }
 
     public bool CanBeDeleted { get; set; }
 
@@ -35,7 +35,7 @@ public class AccountType : DictionaryEntity
 
     public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
-    public virtual ICollection<AccountType> AncestorAccountTypeLinks { get; set; } = new List<AccountType>();
+    public virtual ICollection<AccountTypeAccountTypeLink> AncestorAccountTypeLinks { get; set; } = new List<AccountTypeAccountTypeLink>();
 
-    public virtual ICollection<AccountType> ChildAccountTypeLinks { get; set; } = new List<AccountType>();
+    public virtual ICollection<AccountTypeAccountTypeLink> ChildAccountTypeLinks { get; set; } = new List<AccountTypeAccountTypeLink>();
 }
