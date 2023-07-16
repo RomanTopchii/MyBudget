@@ -15,8 +15,7 @@ public class AccountTypeConfiguration : IEntityTypeConfiguration<AccountType>
         DictionaryEntityConfiguration.Configure(builder);
 
         builder.Property(x => x.Classification)
-            .HasColumnName("classification")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnName("classification");
 
         builder.Property(x => x.HasCurrency)
             .HasColumnName("hasCurrency")

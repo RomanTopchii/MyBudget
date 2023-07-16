@@ -13,7 +13,11 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.ToTable("Account", "app");
 
         BaseEntityConfiguration.Configure(builder);
-
+        
+        builder.Property(x => x.Name)
+            .HasColumnName("name")
+            .HasColumnType(SqlDataTypes.NvarChar255)
+            .IsRequired();
 
         builder.Property(x => x.ParentId)
             .HasColumnName("parentId")
