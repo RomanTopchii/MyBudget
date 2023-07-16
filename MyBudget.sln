@@ -1,8 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.Application", "MyBudget.Application\MyBudget.Application.csproj", "{62706586-B67E-4615-B630-AE38C91FD044}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62706586-B67E-4615-B630-AE38C91FD044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62706586-B67E-4615-B630-AE38C91FD044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62706586-B67E-4615-B630-AE38C91FD044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62706586-B67E-4615-B630-AE38C91FD044}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
