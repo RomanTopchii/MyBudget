@@ -3,7 +3,7 @@ using MyBudget.Application.Domain.Core;
 using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Persistence;
 
-namespace MyBudget.Application.Features.Keeper.Commands;
+namespace MyBudget.Application.Features.Keeper.Commands.SaveKeeper;
 
 public class SaveKeeperCommandHandler : IRequestHandler<SaveKeeperCommand>
 {

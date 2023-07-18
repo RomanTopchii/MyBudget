@@ -1,7 +1,7 @@
 using MediatR;
 using MyBudget.Application.Domain.Enums;
 
-namespace MyBudget.Application.Features.Keeper.Commands;
+namespace MyBudget.Application.Features.Keeper.Commands.SaveKeeper;
 
 public class SaveKeeperCommand : IRequest
 {
