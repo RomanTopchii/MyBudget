@@ -2,7 +2,7 @@ using MediatR;
 using MyBudget.Application.Domain.Enums;
 using MyBudget.Application.Interfaces.Dto.Core;
 
-namespace MyBudget.Application.Features.AccountType.Commands;
+namespace MyBudget.Application.Features.AccountType.Commands.SaveAccountType;
 
 public class SaveAccountTypeCommand : IRequest
 {

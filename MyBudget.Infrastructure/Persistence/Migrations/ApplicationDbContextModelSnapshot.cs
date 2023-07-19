@@ -163,6 +163,10 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("hasKeeper");
 
+                    b.Property<bool>("HasLinkedAccount")
+                        .HasColumnType("bit")
+                        .HasColumnName("hasLinkedAccount");
+
                     b.Property<short>("KeeperGroup")
                         .HasColumnType("smallint")
                         .HasColumnName("keeperGroup");

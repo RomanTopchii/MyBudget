@@ -13,6 +13,8 @@ public class AccountType : DictionaryEntity
 
     public bool HasKeeper { get; set; }
 
+    public bool HasLinkedAccount { get; set; }
+
     public bool HasInitialBalance { get; set; }
 
     public bool CalcFullTimeBalance { get; set; }

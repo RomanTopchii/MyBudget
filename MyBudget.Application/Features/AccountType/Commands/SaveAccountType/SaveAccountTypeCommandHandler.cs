@@ -4,7 +4,7 @@ using MyBudget.Application.Domain.Core;
 using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Persistence.Repositories;
 
-namespace MyBudget.Application.Features.AccountType.Commands;
+namespace MyBudget.Application.Features.AccountType.Commands.SaveAccountType;
 
 public class SaveAccountTypeCommandHandler : IRequestHandler<SaveAccountTypeCommand>
 {
@@ -17,7 +17,7 @@ public class SaveAccountTypeCommandHandler : IRequestHandler<SaveAccountTypeComm
 
     public async Task Handle(SaveAccountTypeCommand request, CancellationToken cancellationToken)
     {
-        if (await this._unitOfWork.CurrencyRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.Id))
+        if (await this._unitOfWork.AccountTypeRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.Id))
         {
             throw new ObjectWithSameNameAlreadyExistsException<Domain.AccountType>(new DictionaryEntity
                 { Name = request.Name });

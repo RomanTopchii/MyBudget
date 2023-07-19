@@ -24,6 +24,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     hasCurrency = table.Column<bool>(type: "bit", nullable: false),
                     hasHolder = table.Column<bool>(type: "bit", nullable: false),
                     hasKeeper = table.Column<bool>(type: "bit", nullable: false),
+                    hasLinkedAccount = table.Column<bool>(type: "bit", nullable: false),
                     hasInitialBalance = table.Column<bool>(type: "bit", nullable: false),
                     calcFullTimeBalance = table.Column<bool>(type: "bit", nullable: false),
                     canBeDeleted = table.Column<bool>(type: "bit", nullable: false),

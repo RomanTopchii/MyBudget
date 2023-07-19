@@ -1,6 +1,6 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.AccountType.Commands;
+using MyBudget.Application.Features.AccountType.Commands.SaveAccountType;
 
 namespace MyBudget.WebApi.Endpoints.AccountType;
 

@@ -12,7 +12,7 @@ using MyBudget.Infrastructure.Persistence;
 namespace MyBudget.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230716151737_Initial")]
+    [Migration("20230719203915_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -165,6 +165,10 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.Property<bool>("HasKeeper")
                         .HasColumnType("bit")
                         .HasColumnName("hasKeeper");
+
+                    b.Property<bool>("HasLinkedAccount")
+                        .HasColumnType("bit")
+                        .HasColumnName("hasLinkedAccount");
 
                     b.Property<short>("KeeperGroup")
                         .HasColumnType("smallint")

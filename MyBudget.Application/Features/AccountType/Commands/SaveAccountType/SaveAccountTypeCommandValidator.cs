@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace MyBudget.Application.Features.AccountType.Commands;
+namespace MyBudget.Application.Features.AccountType.Commands.SaveAccountType;
 
 public class SaveAccountTypeCommandValidator : AbstractValidator<SaveAccountTypeCommand>
 {
