@@ -8,9 +8,9 @@ public static class ProgramExtensions
     public static void RegisterApplicationsServices(this IServiceCollection services,
         ConfigurationManager configuration)
     {
-        services.AddFastEndpoints();
+        services.AddFastEndpoints(o => o.IncludeAbstractValidators = true);
         services.SwaggerDocument();
-        
+
         Application.Startup.ConfigureServices(services);
         new Infrastructure.Startup(configuration).Configure(services);
     }
