@@ -30,8 +30,8 @@ public class UnitOfWork : IUnitOfWork
         this.AccountRepository = new GenericRepository<Account>(this._context);
         this.AccountTypeRepository = new GenericRepository<AccountType>(this._context);
         this.AccountTypeAccountTypeLinkRepository = new GenericRepository<AccountTypeAccountTypeLink>(this._context);
-        this.CurrencyRepository = new GenericRepository<Currency>(this._context);
-        this.HolderRepository = new GenericRepository<Holder>(this._context);
+        this.CurrencyRepository = new CurrencyRepository(this._context);
+        this.HolderRepository = new HolderRepository(this._context);
         this.KeeperRepository = new KeeperRepository(this._context);
         this.TransactionRepository = new GenericRepository<Transaction>(this._context);
         this.TransactionItemRepository = new GenericRepository<TransactionItem>(this._context);
