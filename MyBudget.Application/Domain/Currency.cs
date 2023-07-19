@@ -4,7 +4,7 @@ namespace MyBudget.Application.Domain;
 
 public class Currency : DictionaryEntity
 {
-    public string Code { get; set; }
+    public string Code { get; set; } = string.Empty;
     
     public int Iso4217 { get; set; }
 

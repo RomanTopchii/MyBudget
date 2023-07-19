@@ -1,5 +1,6 @@
 using MyBudget.Application.Domain;
-using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
+using MyBudget.Infrastructure.Persistence.Repositories;
 
 namespace MyBudget.Infrastructure.Persistence;
 
@@ -31,7 +32,7 @@ public class UnitOfWork : IUnitOfWork
         this.AccountTypeAccountTypeLinkRepository = new GenericRepository<AccountTypeAccountTypeLink>(this._context);
         this.CurrencyRepository = new GenericRepository<Currency>(this._context);
         this.HolderRepository = new GenericRepository<Holder>(this._context);
-        this.KeeperRepository = new GenericRepository<Keeper>(this._context);
+        this.KeeperRepository = new KeeperRepository(this._context);
         this.TransactionRepository = new GenericRepository<Transaction>(this._context);
         this.TransactionItemRepository = new GenericRepository<TransactionItem>(this._context);
     }

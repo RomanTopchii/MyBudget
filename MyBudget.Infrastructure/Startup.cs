@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Infrastructure.Persistence;
 
 namespace MyBudget.Infrastructure;

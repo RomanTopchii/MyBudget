@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 
 namespace MyBudget.Infrastructure.Persistence;
 

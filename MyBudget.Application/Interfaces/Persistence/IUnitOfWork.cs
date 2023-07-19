@@ -1,6 +1,6 @@
 using MyBudget.Application.Domain;
 
-namespace MyBudget.Application.Interfaces.Persistence;
+namespace MyBudget.Application.Interfaces.Persistence.Repositories;
 
 public interface IUnitOfWork
 {

@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace MyBudget.Application.Interfaces.Persistence;
+namespace MyBudget.Application.Interfaces.Persistence.Repositories;
 
 public interface IGenericRepository<T> 
     where T : class
