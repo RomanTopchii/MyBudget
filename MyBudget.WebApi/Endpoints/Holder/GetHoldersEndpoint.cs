@@ -1,17 +1,16 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.Keeper.Commands;
-using MyBudget.Application.Features.Keeper.Commands.SaveKeeper;
+using MyBudget.Application.Features.Holder.Queries.GetHolders;
 using MyBudget.Application.Features.Keeper.Queries.GetKeepers;
 using MyBudget.Application.Interfaces.Dto;
 
-namespace MyBudget.WebApi.Endpoints.Keeper;
+namespace MyBudget.WebApi.Endpoints.Holder;
 
-public class GetKeepersEndpoint : Endpoint<EmptyRequest, List<KeeperSimpleDto>>
+public class GetHoldersEndpoint : Endpoint<EmptyRequest, List<HolderSimpleDto>>
 {
     private readonly IMediator _mediator;
 
-    public GetKeepersEndpoint(IMediator mediator)
+    public GetHoldersEndpoint(IMediator mediator)
     {
         this._mediator = mediator;
     }
@@ -19,13 +18,13 @@ public class GetKeepersEndpoint : Endpoint<EmptyRequest, List<KeeperSimpleDto>>
     public override void Configure()
     {
         Verbs(Http.GET);
-        Routes("Keeper/GetKeepers");
+        Routes("Holder/GetHolders");
         AllowAnonymous();
     }
 
     public override async Task HandleAsync(EmptyRequest req, CancellationToken ct)
     {
-        var result = await _mediator.Send(new GetKeepersQuery(), ct);
+        var result = await _mediator.Send(new GetHoldersQuery(), ct);
         await this.SendAsync(result);
     }
 }

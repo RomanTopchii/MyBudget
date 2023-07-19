@@ -8,6 +8,6 @@ public class DictionaryEntityDto : BaseEntityDto
 
     public DictionaryEntityDto(DictionaryEntity domain) : base(domain)
     {
-        Name = domain.Name;
+        this.Name = domain.Name;
     }
 }

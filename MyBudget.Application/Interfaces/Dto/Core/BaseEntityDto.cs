@@ -8,5 +8,6 @@ public class BaseEntityDto : IdentifiableDto
 
     public BaseEntityDto(BaseEntity domain) : base(domain)
     {
+        this.Active = domain.Active;
     }
 }

@@ -23,7 +23,7 @@ public class DeleteKeeperCommandHandler : IRequestHandler<DeleteKeeperCommand>
 
         if (keeper.Accounts.Any())
         {
-            throw new KeeperUsedInAccountException(request.Id);
+            throw new ObjectUsedInAccountException<Domain.Keeper>(request.Id);
         }
 
         await _unitOfWork.KeeperRepository.RemoveAsync(keeper);

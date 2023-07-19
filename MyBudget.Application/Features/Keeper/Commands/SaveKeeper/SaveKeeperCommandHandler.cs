@@ -31,13 +31,13 @@ public class SaveKeeperCommandHandler : IRequestHandler<SaveKeeperCommand>
         if (keeper == null)
         {
             keeper = new Domain.Keeper();
+            await this._unitOfWork.KeeperRepository.AddAsync(keeper);
         }
 
         keeper.Id = request.Id ?? Guid.NewGuid();
         keeper.Active = request.Active;
         keeper.Name = request.Name;
         keeper.Type = request.Type;
-        await this._unitOfWork.KeeperRepository.AddAsync(keeper);
         this._unitOfWork.Complete();
     }
 }

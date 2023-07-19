@@ -8,6 +8,6 @@ public class IdentifiableDto
 
     public IdentifiableDto(BaseEntity domain)
     {
-        Id = domain.Id;
+        this.Id = domain.Id;
     }
 }
