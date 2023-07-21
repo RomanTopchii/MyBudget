@@ -49,13 +49,13 @@ public class SaveAccountCommandHandler : IRequestHandler<SaveAccountCommand>
             parent = await this._unitOfWork.AccountRepository.GetByIdAsync((Guid)request.ParentId) ??
                      throw new ObjectNotFoundException<Domain.Account>((Guid)request.ParentId);
             account.Parent = parent;
-        }
 
-        var possibleAccountTypes = await this._unitOfWork.AccountTypeRepository
-            .FindAsync(x => x.AncestorAccountTypeLinks.Any(l => l.AncestorId == parent.TypeId));
-        if (!possibleAccountTypes.Select(x => x.Id).Contains(request.TypeId))
-        {
-            throw new AccountTypeDoesNotCorrelateParentTypeException();
+            var possibleAccountTypes = await this._unitOfWork.AccountTypeRepository
+                .FindAsync(x => x.AncestorAccountTypeLinks.Any(l => l.AncestorId == parent.TypeId));
+            if (!possibleAccountTypes.Select(x => x.Id).Contains(request.TypeId))
+            {
+                throw new AccountTypeDoesNotCorrelateParentTypeException();
+            }
         }
 
         account.Currency = CalcValue(
@@ -90,7 +90,11 @@ public class SaveAccountCommandHandler : IRequestHandler<SaveAccountCommand>
         Guid? requestPropertyId,
         T? propertyValue)
     {
-        if (hasValue)
+        if (!hasValue && requestPropertyId != null)
+        {
+            throw new DynamicAccountException($"Account should not has {typeof(T).Name.ToLower()}");
+        }
+        else if (hasValue)
         {
             if (requestPropertyId != null)
             {
@@ -110,7 +114,7 @@ public class SaveAccountCommandHandler : IRequestHandler<SaveAccountCommand>
         }
         else
         {
-            throw new DynamicAccountException($"Account should not has {typeof(T).Name.ToLower()}");
+            return default;
         }
     }
 }
