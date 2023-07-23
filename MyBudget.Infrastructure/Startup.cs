@@ -6,19 +6,12 @@ using MyBudget.Infrastructure.Persistence;
 
 namespace MyBudget.Infrastructure;
 
-public class Startup
+public static class Startup
 {
-    private readonly IConfiguration configuration;
-
-    public Startup(IConfiguration configuration)
-    {
-        this.configuration = configuration;
-    }
-
-    public void Configure(IServiceCollection services)
+    public static void Configure(IServiceCollection services, string connectionString)
     {
         services.AddDbContext<ApplicationDbContext>(option =>
-            option.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+            option.UseSqlServer(connectionString));
         services.AddTransient<IUnitOfWork, UnitOfWork>();
     }
 

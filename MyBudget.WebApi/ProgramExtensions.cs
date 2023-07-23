@@ -12,6 +12,6 @@ public static class ProgramExtensions
         services.SwaggerDocument();
 
         Application.Startup.ConfigureServices(services);
-        new Infrastructure.Startup(configuration).Configure(services);
+        Infrastructure.Startup.Configure(services, configuration.GetConnectionString("DefaultConnection"));
     }
 }
