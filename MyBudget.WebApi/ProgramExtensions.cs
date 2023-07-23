@@ -8,6 +8,8 @@ public static class ProgramExtensions
     public static void RegisterApplicationsServices(this IServiceCollection services,
         ConfigurationManager configuration)
     {
+        services.AddTransient<Middleware>();
+
         services.AddFastEndpoints(o => o.IncludeAbstractValidators = true);
         services.SwaggerDocument();
 
