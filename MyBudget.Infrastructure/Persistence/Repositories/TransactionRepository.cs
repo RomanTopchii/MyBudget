@@ -19,6 +19,15 @@ public class TransactionRepository : GenericRepository<Transaction>
         return await GetAllQuery().ToListAsync();
     }
     
+    private IQueryable<Transaction> GetByIdQuery(Guid id)
+    {
+        return dbSet
+            .Include(x => x.TransactionItems)
+            .ThenInclude(x => x.Account)
+            .ThenInclude(x => x.Currency)
+            .Where(x => x.Id == id);
+    }
+    
     private IQueryable<Transaction> GetAllQuery()
     {
         return dbSet
