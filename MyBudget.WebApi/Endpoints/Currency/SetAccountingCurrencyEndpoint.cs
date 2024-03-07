@@ -1,6 +1,6 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.Currency.Commands.SetAccountingCurrency;
+using MyBudget.Application.Commands.Currency.SetAccountingCurrency;
 
 namespace MyBudget.WebApi.Endpoints.Currency;
 

@@ -1,6 +1,6 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.Currency.Commands.DeleteCurrency;
+using MyBudget.Application.Commands.Currency.DeleteCurrency;
 
 namespace MyBudget.WebApi.Endpoints.Currency;
 

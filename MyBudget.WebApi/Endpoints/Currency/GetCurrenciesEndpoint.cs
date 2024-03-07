@@ -1,7 +1,7 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.Currency.Queries.GetCurrencies;
 using MyBudget.Application.Interfaces.Dto;
+using MyBudget.Application.Queries.Currency.GetCurrencies;
 
 namespace MyBudget.WebApi.Endpoints.Currency;
 

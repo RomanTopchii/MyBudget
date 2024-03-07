@@ -1,6 +1,6 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.Transaction.Commands.SaveTransaction;
+using MyBudget.Application.Commands.Transaction.SaveTransaction;
 
 namespace MyBudget.WebApi.Endpoints.Transaction;
 

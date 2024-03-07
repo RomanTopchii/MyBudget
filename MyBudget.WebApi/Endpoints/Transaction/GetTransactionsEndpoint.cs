@@ -1,7 +1,7 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.Transaction.Queries.GetTransactions;
 using MyBudget.Application.Interfaces.Dto;
+using MyBudget.Application.Queries.Transaction.GetTransactions;
 
 namespace MyBudget.WebApi.Endpoints.Keeper;
 

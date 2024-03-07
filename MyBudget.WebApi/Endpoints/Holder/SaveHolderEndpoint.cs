@@ -1,6 +1,6 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.Holder.Commands.SaveHolder;
+using MyBudget.Application.Commands.Holder.SaveHolder;
 
 namespace MyBudget.WebApi.Endpoints.Holder;
 

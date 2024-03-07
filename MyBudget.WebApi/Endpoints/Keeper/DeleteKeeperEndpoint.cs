@@ -1,6 +1,6 @@
 using FastEndpoints;
 using MediatR;
-using MyBudget.Application.Features.Keeper.Commands.DeleteKeeper;
+using MyBudget.Application.Commands.Keeper.DeleteKeeper;
 
 namespace MyBudget.WebApi.Endpoints.Keeper;
 
