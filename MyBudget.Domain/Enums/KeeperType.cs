@@ -1,4 +1,4 @@
-namespace MyBudget.Application.Domain.Enums;
+namespace MyBudget.Domain.Enums;
 
 public enum KeeperType
 {

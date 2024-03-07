@@ -1,5 +1,4 @@
 using MediatR;
-using MyBudget.Application.Domain.Enums;
 
 namespace MyBudget.Application.Features.Holder.Commands.SaveHolder;
 

@@ -1,6 +1,6 @@
-using MyBudget.Application.Domain.Core;
+using MyBudget.Domain.Core;
 
-namespace MyBudget.Application.Domain;
+namespace MyBudget.Domain;
 
 public class Account : DictionaryEntity
 {

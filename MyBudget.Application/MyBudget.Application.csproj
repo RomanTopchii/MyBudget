@@ -15,4 +15,8 @@
       <Folder Include="Features\Account\Commands\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MyBudget.Domain\MyBudget.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

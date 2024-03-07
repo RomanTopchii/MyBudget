@@ -1,5 +1,5 @@
 using MediatR;
-using MyBudget.Application.Domain.Enums;
+using MyBudget.Domain.Enums;
 using MyBudget.Application.Interfaces.Dto;
 
 namespace MyBudget.Application.Features.Transaction.Commands.SaveTransaction;

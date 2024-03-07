@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.WebApi", "MyBudget.WebApi\MyBudget.WebApi.csproj", "{A0DC6073-5FE0-4340-BF76-94095ED0B4C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.Domain", "MyBudget.Domain\MyBudget.Domain.csproj", "{2EE38EB7-F7C9-492F-BAC6-4E890D0E4D00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A0DC6073-5FE0-4340-BF76-94095ED0B4C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0DC6073-5FE0-4340-BF76-94095ED0B4C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0DC6073-5FE0-4340-BF76-94095ED0B4C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE38EB7-F7C9-492F-BAC6-4E890D0E4D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE38EB7-F7C9-492F-BAC6-4E890D0E4D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE38EB7-F7C9-492F-BAC6-4E890D0E4D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE38EB7-F7C9-492F-BAC6-4E890D0E4D00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,5 +1,5 @@
 using MediatR;
-using MyBudget.Application.Domain.Enums;
+using MyBudget.Domain.Enums;
 
 namespace MyBudget.Application.Features.Keeper.Commands.SaveKeeper;
 

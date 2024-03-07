@@ -1,5 +1,6 @@
 using MediatR;
 using MyBudget.Application.Interfaces.Dto;
+using MyBudget.Application.Interfaces.Persistence;
 using MyBudget.Application.Interfaces.Persistence.Repositories;
 
 namespace MyBudget.Application.Features.Currency.Queries.GetCurrencies;

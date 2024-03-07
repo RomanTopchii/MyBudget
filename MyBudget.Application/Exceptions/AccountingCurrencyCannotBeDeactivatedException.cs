@@ -1,6 +1,4 @@
 using System.Runtime.Serialization;
-using MyBudget.Application.Domain;
-using MyBudget.Application.Domain.Core;
 
 namespace MyBudget.Application.Exceptions;
 

@@ -1,6 +1,7 @@
 using MediatR;
 using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Dto;
+using MyBudget.Application.Interfaces.Persistence;
 using MyBudget.Application.Interfaces.Persistence.Repositories;
 
 namespace MyBudget.Application.Features.Keeper.Queries.GetKeepers;

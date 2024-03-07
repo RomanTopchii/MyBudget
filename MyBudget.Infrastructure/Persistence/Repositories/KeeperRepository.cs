@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MyBudget.Application.Domain;
+using MyBudget.Domain;
 
 namespace MyBudget.Infrastructure.Persistence.Repositories;
 

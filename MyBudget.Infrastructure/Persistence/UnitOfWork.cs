@@ -1,4 +1,5 @@
-using MyBudget.Application.Domain;
+using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Domain;
 using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Infrastructure.Persistence.Repositories;
 

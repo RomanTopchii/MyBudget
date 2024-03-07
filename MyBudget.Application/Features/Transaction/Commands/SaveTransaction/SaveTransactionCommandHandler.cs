@@ -1,6 +1,7 @@
 using MediatR;
-using MyBudget.Application.Domain;
-using MyBudget.Application.Domain.Enums;
+using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Domain;
+using MyBudget.Domain.Enums;
 using MyBudget.Application.Interfaces.Persistence.Repositories;
 
 namespace MyBudget.Application.Features.Transaction.Commands.SaveTransaction;

@@ -1,4 +1,4 @@
-namespace MyBudget.Application.Domain.Enums;
+namespace MyBudget.Domain.Enums;
 
 public enum TransactionItemType
 {
@@ -7,7 +7,7 @@ public enum TransactionItemType
 }
 
 
-static class TransactionItemTypeMethods
+public static class TransactionItemTypeMethods
 {
     public static string GetString(this TransactionItemType s1)
     {

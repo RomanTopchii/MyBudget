@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyBudget.Application.Domain.Core;
+using MyBudget.Domain.Core;
 using MyBudget.Infrastructure.Persistence.Helpers;
 
 namespace MyBudget.Infrastructure.Persistence.EntityTypeConfiguration.Core;

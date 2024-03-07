@@ -1,4 +1,4 @@
-namespace MyBudget.Application.Domain.Core;
+namespace MyBudget.Domain.Core;
 
 public class DictionaryEntity : BaseEntity
 {

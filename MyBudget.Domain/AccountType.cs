@@ -1,7 +1,7 @@
-using MyBudget.Application.Domain.Core;
-using MyBudget.Application.Domain.Enums;
+using MyBudget.Domain.Core;
+using MyBudget.Domain.Enums;
 
-namespace MyBudget.Application.Domain;
+namespace MyBudget.Domain;
 
 public class AccountType : DictionaryEntity
 {

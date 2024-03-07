@@ -26,7 +26,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Account", b =>
+            modelBuilder.Entity("MyBudget.Domain.Account", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,7 +99,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.ToTable("Account", "app");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.AccountType", b =>
+            modelBuilder.Entity("MyBudget.Domain.AccountType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -199,7 +199,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.ToTable("AccountType", "app");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.AccountTypeAccountTypeLink", b =>
+            modelBuilder.Entity("MyBudget.Domain.AccountTypeAccountTypeLink", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,7 +244,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.ToTable("AccountTypeAccountTypeLink", "app");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Currency", b =>
+            modelBuilder.Entity("MyBudget.Domain.Currency", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -302,7 +302,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.ToTable("Currency", "app");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Holder", b =>
+            modelBuilder.Entity("MyBudget.Domain.Holder", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -342,7 +342,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.ToTable("Holder", "app");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Keeper", b =>
+            modelBuilder.Entity("MyBudget.Domain.Keeper", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -386,7 +386,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.ToTable("Keeper", "app");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Transaction", b =>
+            modelBuilder.Entity("MyBudget.Domain.Transaction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -434,7 +434,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.ToTable("Transaction", "app");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.TransactionItem", b =>
+            modelBuilder.Entity("MyBudget.Domain.TransactionItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -486,33 +486,33 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.ToTable("TransactionItem", "app");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Account", b =>
+            modelBuilder.Entity("MyBudget.Domain.Account", b =>
                 {
-                    b.HasOne("MyBudget.Application.Domain.Currency", "Currency")
+                    b.HasOne("MyBudget.Domain.Currency", "Currency")
                         .WithMany("Accounts")
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("MyBudget.Application.Domain.Holder", "Holder")
+                    b.HasOne("MyBudget.Domain.Holder", "Holder")
                         .WithMany("Accounts")
                         .HasForeignKey("HolderId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("MyBudget.Application.Domain.Keeper", "Keeper")
+                    b.HasOne("MyBudget.Domain.Keeper", "Keeper")
                         .WithMany("Accounts")
                         .HasForeignKey("KeeperId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("MyBudget.Application.Domain.Account", "LinkedAccount")
+                    b.HasOne("MyBudget.Domain.Account", "LinkedAccount")
                         .WithMany()
                         .HasForeignKey("LinkedAccountId");
 
-                    b.HasOne("MyBudget.Application.Domain.Account", "Parent")
+                    b.HasOne("MyBudget.Domain.Account", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("MyBudget.Application.Domain.AccountType", "Type")
+                    b.HasOne("MyBudget.Domain.AccountType", "Type")
                         .WithMany("Accounts")
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -531,15 +531,15 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.AccountTypeAccountTypeLink", b =>
+            modelBuilder.Entity("MyBudget.Domain.AccountTypeAccountTypeLink", b =>
                 {
-                    b.HasOne("MyBudget.Application.Domain.AccountType", "Ancestor")
+                    b.HasOne("MyBudget.Domain.AccountType", "Ancestor")
                         .WithMany("AncestorAccountTypeLinks")
                         .HasForeignKey("AncestorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MyBudget.Application.Domain.AccountType", "Child")
+                    b.HasOne("MyBudget.Domain.AccountType", "Child")
                         .WithMany("ChildAccountTypeLinks")
                         .HasForeignKey("ChildId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -550,15 +550,15 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.Navigation("Child");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.TransactionItem", b =>
+            modelBuilder.Entity("MyBudget.Domain.TransactionItem", b =>
                 {
-                    b.HasOne("MyBudget.Application.Domain.Account", "Account")
+                    b.HasOne("MyBudget.Domain.Account", "Account")
                         .WithMany("TransactionItems")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MyBudget.Application.Domain.Transaction", "Transaction")
+                    b.HasOne("MyBudget.Domain.Transaction", "Transaction")
                         .WithMany("TransactionItems")
                         .HasForeignKey("TransactionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -569,14 +569,14 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.Navigation("Transaction");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Account", b =>
+            modelBuilder.Entity("MyBudget.Domain.Account", b =>
                 {
                     b.Navigation("Children");
 
                     b.Navigation("TransactionItems");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.AccountType", b =>
+            modelBuilder.Entity("MyBudget.Domain.AccountType", b =>
                 {
                     b.Navigation("Accounts");
 
@@ -585,22 +585,22 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.Navigation("ChildAccountTypeLinks");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Currency", b =>
+            modelBuilder.Entity("MyBudget.Domain.Currency", b =>
                 {
                     b.Navigation("Accounts");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Holder", b =>
+            modelBuilder.Entity("MyBudget.Domain.Holder", b =>
                 {
                     b.Navigation("Accounts");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Keeper", b =>
+            modelBuilder.Entity("MyBudget.Domain.Keeper", b =>
                 {
                     b.Navigation("Accounts");
                 });
 
-            modelBuilder.Entity("MyBudget.Application.Domain.Transaction", b =>
+            modelBuilder.Entity("MyBudget.Domain.Transaction", b =>
                 {
                     b.Navigation("TransactionItems");
                 });

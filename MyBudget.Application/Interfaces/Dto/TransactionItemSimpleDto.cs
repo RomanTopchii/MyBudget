@@ -1,4 +1,5 @@
-using MyBudget.Application.Domain.Enums;
+using MyBudget.Domain.Enums;
+using MyBudget.Domain.Enums;
 
 namespace MyBudget.Application.Interfaces.Dto;
 
