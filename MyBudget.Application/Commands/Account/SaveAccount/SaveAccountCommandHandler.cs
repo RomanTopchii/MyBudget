@@ -6,37 +6,37 @@ using MyBudget.Application.Interfaces.Persistence.Repositories;
 
 namespace MyBudget.Application.Commands.Account.SaveAccount;
 
-public class SaveAccountCommandHandler : IRequestHandler<SaveAccountCommand>
+public record SaveAccountCommandHandler(
+        IAccountRepository AccountRepository,
+        IRepository<Domain.AccountType> AccountTypeRepository,
+        ICurrencyRepository CurrencyRepository,
+        IHolderRepository HolderRepository,
+        IKeeperRepository KeeperRepository,
+        IUnitOfWork UnitOfWork)
+    : IRequestHandler<SaveAccountCommand>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public SaveAccountCommandHandler(IUnitOfWork unitOfWork)
-    {
-        this._unitOfWork = unitOfWork;
-    }
-
     public async Task Handle(SaveAccountCommand request, CancellationToken cancellationToken)
     {
-        if (await this._unitOfWork.AccountRepository.AnyAsync(x =>
+        if (await this.AccountRepository.AnyAsync(x =>
                 x.Name == request.Name && x.Id != request.Id && x.ParentId == request.ParentId))
         {
             throw new ObjectWithSameNameAlreadyExistsException<Domain.Account>(new DictionaryEntity
                 { Name = request.Name });
         }
 
-        var accountType = await this._unitOfWork.AccountTypeRepository.GetByIdAsync(request.TypeId) ??
+        var accountType = await this.AccountTypeRepository.GetByIdAsync(request.TypeId) ??
                           throw new ObjectNotFoundException<Domain.AccountType>(request.TypeId);
 
         Domain.Account? account = null;
         if (request.Id != null)
         {
-            account = await this._unitOfWork.AccountRepository.GetByIdAsync((Guid)request.Id);
+            account = await this.AccountRepository.GetByIdAsync((Guid)request.Id);
         }
 
         if (account == null)
         {
             account = new Domain.Account();
-            await this._unitOfWork.AccountRepository.AddAsync(account);
+            await this.AccountRepository.AddAsync(account);
         }
 
         account.Id = request.Id ?? Guid.NewGuid();
@@ -47,11 +47,11 @@ public class SaveAccountCommandHandler : IRequestHandler<SaveAccountCommand>
         Domain.Account? parent = null;
         if (request.ParentId != null)
         {
-            parent = await this._unitOfWork.AccountRepository.GetByIdAsync((Guid)request.ParentId) ??
+            parent = await this.AccountRepository.GetByIdAsync((Guid)request.ParentId) ??
                      throw new ObjectNotFoundException<Domain.Account>((Guid)request.ParentId);
             account.Parent = parent;
 
-            var possibleAccountTypes = await this._unitOfWork.AccountTypeRepository
+            var possibleAccountTypes = await this.AccountTypeRepository
                 .FindAsync(x => x.AncestorAccountTypeLinks.Any(l => l.AncestorId == parent.TypeId));
             if (!possibleAccountTypes.Select(x => x.Id).Contains(request.TypeId))
             {
@@ -62,28 +62,28 @@ public class SaveAccountCommandHandler : IRequestHandler<SaveAccountCommand>
         account.Currency = CalcValue(
             accountType.HasCurrency,
             request.CurrencyId,
-            (await this._unitOfWork.CurrencyRepository.FindAsync(x => x.Id == request.CurrencyId)).SingleOrDefault()
+            (await this.CurrencyRepository.FindAsync(x => x.Id == request.CurrencyId)).SingleOrDefault()
         );
 
         account.Keeper = CalcValue(
             accountType.HasKeeper,
             request.KeeperId,
-            (await this._unitOfWork.KeeperRepository.FindAsync(x => x.Id == request.KeeperId)).SingleOrDefault()
+            (await this.KeeperRepository.FindAsync(x => x.Id == request.KeeperId)).SingleOrDefault()
         );
 
         account.Holder = CalcValue(
             accountType.HasHolder,
             request.HolderId,
-            (await this._unitOfWork.HolderRepository.FindAsync(x => x.Id == request.HolderId)).SingleOrDefault()
+            (await this.HolderRepository.FindAsync(x => x.Id == request.HolderId)).SingleOrDefault()
         );
 
         account.LinkedAccount = CalcValue(
             accountType.HasLinkedAccount,
             request.LinkedAccountId,
-            (await this._unitOfWork.AccountRepository.FindAsync(x => x.Id == request.LinkedAccountId)).SingleOrDefault()
+            (await this.AccountRepository.FindAsync(x => x.Id == request.LinkedAccountId)).SingleOrDefault()
         );
 
-        this._unitOfWork.Complete();
+        this.UnitOfWork.Complete();
     }
 
     private T? CalcValue<T>(

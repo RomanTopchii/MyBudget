@@ -7,18 +7,15 @@ using MyBudget.Application.Interfaces.Persistence.Repositories;
 
 namespace MyBudget.Application.Commands.AccountType.SaveAccountType;
 
-public class SaveAccountTypeCommandHandler : IRequestHandler<SaveAccountTypeCommand>
+public record SaveAccountTypeCommandHandler(
+        IRepository<Domain.AccountType> AccountTypeRepository,
+        IRepository<AccountTypeAccountTypeLink> AccountTypeAccountTypeLinkRepository,
+        IUnitOfWork UnitOfWork)
+    : IRequestHandler<SaveAccountTypeCommand>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public SaveAccountTypeCommandHandler(IUnitOfWork unitOfWork)
-    {
-        this._unitOfWork = unitOfWork;
-    }
-
     public async Task Handle(SaveAccountTypeCommand request, CancellationToken cancellationToken)
     {
-        if (await this._unitOfWork.AccountTypeRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.Id))
+        if (await this.AccountTypeRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.Id))
         {
             throw new ObjectWithSameNameAlreadyExistsException<Domain.AccountType>(new DictionaryEntity
                 { Name = request.Name });
@@ -27,13 +24,13 @@ public class SaveAccountTypeCommandHandler : IRequestHandler<SaveAccountTypeComm
         Domain.AccountType? accountType = null;
         if (request.Id != null)
         {
-            accountType = await this._unitOfWork.AccountTypeRepository.GetByIdAsync((Guid)request.Id);
+            accountType = await this.AccountTypeRepository.GetByIdAsync((Guid)request.Id);
         }
 
         if (accountType == null)
         {
             accountType = new Domain.AccountType();
-            await this._unitOfWork.AccountTypeRepository.AddAsync(accountType);
+            await this.AccountTypeRepository.AddAsync(accountType);
         }
 
         accountType.Id = request.Id ?? Guid.NewGuid();
@@ -54,7 +51,7 @@ public class SaveAccountTypeCommandHandler : IRequestHandler<SaveAccountTypeComm
         accountType.KeeperGroup = request.KeeperGroup;
         accountType.Priority = request.Priority;
 
-        var accountTypeAccountTypeLinks = await _unitOfWork.AccountTypeAccountTypeLinkRepository
+        var accountTypeAccountTypeLinks = await this.AccountTypeAccountTypeLinkRepository
             .FindAsync(x => x.ChildId == request.Id);
 
         foreach (var parentIdToAdd in request.ParentTypes.Select(x => x.Id)
@@ -66,15 +63,15 @@ public class SaveAccountTypeCommandHandler : IRequestHandler<SaveAccountTypeComm
                 AncestorId = parentIdToAdd,
                 ChildId = accountType.Id
             };
-            await this._unitOfWork.AccountTypeAccountTypeLinkRepository.AddAsync(accountTypeAccountTypeLink);
+            await this.AccountTypeAccountTypeLinkRepository.AddAsync(accountTypeAccountTypeLink);
         }
 
         foreach (var accountTypeAccountTypeLink in accountTypeAccountTypeLinks.Where(x => !request.ParentTypes
                      .Select(x => x.Id).Contains(x.AncestorId)))
         {
-            await this._unitOfWork.AccountTypeAccountTypeLinkRepository.RemoveAsync(accountTypeAccountTypeLink);
+            this.AccountTypeAccountTypeLinkRepository.Remove(accountTypeAccountTypeLink);
         }
 
-        this._unitOfWork.Complete();
+        this.UnitOfWork.Complete();
     }
 }

@@ -1,37 +1,20 @@
 using Microsoft.EntityFrameworkCore;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Domain;
 
 namespace MyBudget.Infrastructure.Persistence.Repositories;
 
-public class TransactionRepository : GenericRepository<Transaction>
+public class TransactionRepository : Repository<Transaction>, ITransactionRepository
 {
-    public TransactionRepository(DbContext context): base(context)
-    {   
-    }
-
-    public new IEnumerable<Transaction> GetAll()
+    public TransactionRepository(ApplicationDbContext context) : base(context)
     {
-        return GetAllQuery();
     }
 
     public new async Task<IEnumerable<Transaction>> GetAllAsync()
     {
-        return await GetAllQuery().ToListAsync();
-    }
-    
-    private IQueryable<Transaction> GetByIdQuery(Guid id)
-    {
-        return dbSet
+        return await dbSet
             .Include(x => x.TransactionItems)
             .ThenInclude(x => x.Account)
-            .ThenInclude(x => x.Currency)
-            .Where(x => x.Id == id);
-    }
-    
-    private IQueryable<Transaction> GetAllQuery()
-    {
-        return dbSet
-            .Include(x => x.TransactionItems)
-            .ThenInclude(x => x.Account);
+            .ToListAsync();
     }
 }

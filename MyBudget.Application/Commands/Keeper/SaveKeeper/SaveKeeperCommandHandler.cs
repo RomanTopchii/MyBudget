@@ -1,22 +1,18 @@
 using MediatR;
 using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Domain.Core;
 
 namespace MyBudget.Application.Commands.Keeper.SaveKeeper;
 
-public class SaveKeeperCommandHandler : IRequestHandler<SaveKeeperCommand>
+public record SaveKeeperCommandHandler(
+    IKeeperRepository KeeperRepository,
+    IUnitOfWork UnitOfWork) : IRequestHandler<SaveKeeperCommand>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public SaveKeeperCommandHandler(IUnitOfWork unitOfWork)
-    {
-        this._unitOfWork = unitOfWork;
-    }
-
     public async Task Handle(SaveKeeperCommand request, CancellationToken cancellationToken)
     {
-        if (await this._unitOfWork.KeeperRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.Id))
+        if (await this.KeeperRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.Id))
         {
             throw new ObjectWithSameNameAlreadyExistsException<Domain.Keeper>(new DictionaryEntity
                 { Name = request.Name });
@@ -25,19 +21,20 @@ public class SaveKeeperCommandHandler : IRequestHandler<SaveKeeperCommand>
         Domain.Keeper? keeper = null;
         if (request.Id != null)
         {
-            keeper = await this._unitOfWork.KeeperRepository.GetByIdAsync((Guid)request.Id);
+            keeper = await this.KeeperRepository.GetByIdAsync((Guid)request.Id);
         }
 
         if (keeper == null)
         {
             keeper = new Domain.Keeper();
-            await this._unitOfWork.KeeperRepository.AddAsync(keeper);
+            await this.KeeperRepository.AddAsync(keeper);
         }
 
         keeper.Id = request.Id ?? Guid.NewGuid();
         keeper.Active = request.Active;
         keeper.Name = request.Name;
         keeper.Type = request.Type;
-        this._unitOfWork.Complete();
+        
+        this.UnitOfWork.Complete();
     }
 }

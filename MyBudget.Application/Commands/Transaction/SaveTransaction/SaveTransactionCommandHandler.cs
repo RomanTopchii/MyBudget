@@ -1,31 +1,28 @@
 using MediatR;
 using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Domain;
 using MyBudget.Domain.Enums;
 
 namespace MyBudget.Application.Commands.Transaction.SaveTransaction;
 
-public class SaveTransactionCommandHandler : IRequestHandler<SaveTransactionCommand>
+public record SaveTransactionCommandHandler(
+    ITransactionRepository TransactionRepository,
+    IRepository<TransactionItem> TransactionItemRepository,
+    IUnitOfWork UnitOfWork) : IRequestHandler<SaveTransactionCommand>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public SaveTransactionCommandHandler(IUnitOfWork unitOfWork)
-    {
-        this._unitOfWork = unitOfWork;
-    }
-
     public async Task Handle(SaveTransactionCommand request, CancellationToken cancellationToken)
     {
         Domain.Transaction? transaction = null;
         if (request.Id != null)
         {
-            transaction = await this._unitOfWork.TransactionRepository.GetByIdAsync((Guid)request.Id);
+            transaction = await this.TransactionRepository.GetByIdAsync((Guid)request.Id);
         }
 
         if (transaction == null)
         {
             transaction = new Domain.Transaction();
-            await this._unitOfWork.TransactionRepository.AddAsync(transaction);
+            await this.TransactionRepository.AddAsync(transaction);
         }
 
         transaction.Id = request.Id ?? Guid.NewGuid();
@@ -58,7 +55,7 @@ public class SaveTransactionCommandHandler : IRequestHandler<SaveTransactionComm
                 Amount = newItemFromRequest.Amount,
                 Transaction = transaction
             };
-            await this._unitOfWork.TransactionItemRepository.AddAsync(item);
+            await this.TransactionItemRepository.AddAsync(item);
         }
 
         //Delete transaction items
@@ -68,7 +65,7 @@ public class SaveTransactionCommandHandler : IRequestHandler<SaveTransactionComm
         foreach (var item in itemsToDelete)
         {
             transaction.TransactionItems.Remove(item);
-            await this._unitOfWork.TransactionItemRepository.RemoveAsync(item);
+            this.TransactionItemRepository.Remove(item);
         }
 
         ValidateTransactionItemsCurrency(transaction, TransactionItemType.Debit);
@@ -85,7 +82,7 @@ public class SaveTransactionCommandHandler : IRequestHandler<SaveTransactionComm
             throw new Exception("Transaction debit amount is not equal credit amount");
         }
 
-        this._unitOfWork.Complete();
+        this.UnitOfWork.Complete();
     }
 
     private void ValidateTransactionItemsCurrency(

@@ -1,28 +1,20 @@
 using Microsoft.EntityFrameworkCore;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Domain;
 
 namespace MyBudget.Infrastructure.Persistence.Repositories;
 
-public class HolderRepository : GenericRepository<Holder>
+public class HolderRepository : Repository<Holder>, IHolderRepository
 {
-    public HolderRepository(DbContext context): base(context)
-    {   
-    }
-    
-    public new Holder? GetById(Guid id)
+    public HolderRepository(ApplicationDbContext context) : base(context)
     {
-        return GetByIdQuery(id).SingleOrDefault();
     }
 
     public new async Task<Holder?> GetByIdAsync(Guid id)
     {
-        return await GetByIdQuery(id).SingleOrDefaultAsync();
-    }
-    
-    private IQueryable<Holder> GetByIdQuery(Guid id)
-    {
-        return dbSet
+        return await dbSet
             .Include(x => x.Accounts)
-            .Where(x => x.Id == id);
+            .Where(x => x.Id == id)
+            .SingleOrDefaultAsync();
     }
 }

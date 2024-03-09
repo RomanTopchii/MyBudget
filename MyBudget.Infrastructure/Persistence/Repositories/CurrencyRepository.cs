@@ -1,28 +1,20 @@
 using Microsoft.EntityFrameworkCore;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Domain;
 
 namespace MyBudget.Infrastructure.Persistence.Repositories;
 
-public class CurrencyRepository : GenericRepository<Currency>
+public class CurrencyRepository : Repository<Currency>, ICurrencyRepository
 {
-    public CurrencyRepository(DbContext context): base(context)
-    {   
-    }
-    
-    public new Currency? GetById(Guid id)
+    public CurrencyRepository(ApplicationDbContext context) : base(context)
     {
-        return GetByIdQuery(id).SingleOrDefault();
     }
 
     public new async Task<Currency?> GetByIdAsync(Guid id)
     {
-        return await GetByIdQuery(id).SingleOrDefaultAsync();
-    }
-    
-    private IQueryable<Currency> GetByIdQuery(Guid id)
-    {
-        return dbSet
+        return await dbSet
             .Include(x => x.Accounts)
-            .Where(x => x.Id == id);
+            .Where(x => x.Id == id)
+            .SingleOrDefaultAsync();
     }
 }

@@ -1,34 +1,30 @@
 using MediatR;
 using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 
 namespace MyBudget.Application.Commands.Currency.DeleteCurrency;
 
-public class DeleteCurrencyCommandHandler : IRequestHandler<DeleteCurrencyCommand>
+public record DeleteCurrencyCommandHandler(
+    ICurrencyRepository CurrencyRepository,
+    IUnitOfWork UnitOfWork) : IRequestHandler<DeleteCurrencyCommand>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public DeleteCurrencyCommandHandler(IUnitOfWork unitOfWork)
-    {
-        this._unitOfWork = unitOfWork;
-    }
-
     public async Task Handle(DeleteCurrencyCommand request, CancellationToken cancellationToken)
     {
-        var currency = await this._unitOfWork.CurrencyRepository.GetByIdAsync(request.Id) 
+        var currency = await this.CurrencyRepository.GetByIdAsync(request.Id)
                        ?? throw new ObjectNotFoundException<Domain.Currency>(request.Id);
 
         if (currency.IsAccounting)
         {
             throw new AccountingCurrencyCannotBeDeletedException(currency);
         }
-        
+
         if (currency.Accounts.Any())
         {
             throw new ObjectUsedInAccountException<Domain.Keeper>(request.Id);
         }
 
-        await _unitOfWork.CurrencyRepository.RemoveAsync(currency);
-        _unitOfWork.Complete();
+        this.CurrencyRepository.Remove(currency);
+        this.UnitOfWork.Complete();
     }
 }

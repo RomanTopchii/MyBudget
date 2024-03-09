@@ -1,25 +1,22 @@
 using MediatR;
 using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
 
 namespace MyBudget.Application.Commands.Currency.SetAccountingCurrency;
 
-public class SetAccountingCurrencyCommandHandler : IRequestHandler<SetAccountingCurrencyCommand>
+public record SetAccountingCurrencyCommandHandler(
+        ICurrencyRepository CurrencyRepository,
+        IUnitOfWork UnitOfWork)
+    : IRequestHandler<SetAccountingCurrencyCommand>
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public SetAccountingCurrencyCommandHandler(IUnitOfWork unitOfWork)
-    {
-        this._unitOfWork = unitOfWork;
-    }
-
     public async Task Handle(SetAccountingCurrencyCommand request, CancellationToken cancellationToken)
     {
-        var currentAccountingCurrency = (await this._unitOfWork.CurrencyRepository.FindAsync(x => x.IsAccounting))
+        var currentAccountingCurrency = (await this.CurrencyRepository.FindAsync(x => x.IsAccounting))
             .SingleOrDefault();
 
         var newAccountingCurrency =
-            await this._unitOfWork.CurrencyRepository.GetByIdAsync(request.NewAccountingCurrencyId) ??
+            await this.CurrencyRepository.GetByIdAsync(request.NewAccountingCurrencyId) ??
             throw new ObjectNotFoundException<Domain.Currency>(request.NewAccountingCurrencyId);
 
         if (currentAccountingCurrency == null)
@@ -28,7 +25,7 @@ public class SetAccountingCurrencyCommandHandler : IRequestHandler<SetAccounting
         }
         else
         {
-            if (await this._unitOfWork.CurrencyRepository.AnyAsync(x =>
+            if (await this.CurrencyRepository.AnyAsync(x =>
                     x.Id == currentAccountingCurrency.Id && x.Accounts.Any(y => y.TransactionItems.Any())))
             {
                 throw new CurrentAccountingCurrencyAlreadyAccountsWithTransactionsException();
@@ -38,6 +35,6 @@ public class SetAccountingCurrencyCommandHandler : IRequestHandler<SetAccounting
             newAccountingCurrency.IsAccounting = true;
         }
 
-        this._unitOfWork.Complete();
+        this.UnitOfWork.Complete();
     }
 }

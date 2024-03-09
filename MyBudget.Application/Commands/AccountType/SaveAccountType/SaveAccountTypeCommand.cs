@@ -4,41 +4,23 @@ using MyBudget.Application.Interfaces.Dto.Core;
 
 namespace MyBudget.Application.Commands.AccountType.SaveAccountType;
 
-public class SaveAccountTypeCommand : IRequest
-{
-    public Guid? Id { get; set; }
-
-    public bool Active { get; set; }
-
-    public string Name { get; set; } = string.Empty;
-
-    public Classification? Classification { get; set; }
-
-    public bool HasCurrency { get; set; }
-
-    public bool HasHolder { get; set; }
-
-    public bool HasKeeper { get; set; }
-
-    public bool HasInitialBalance { get; set; }
-
-    public bool CalcFullTimeBalance { get; set; }
-
-    public bool CanBeDeleted { get; set; }
-
-    public bool CanChangeActiveStatus { get; set; }
-
-    public bool CanBeRenamed { get; set; }
-
-    public bool CanBeCreatedByUser { get; set; }
-
-    public bool CheckAmountBeforeDeactivate { get; set; }
-
-    public bool AllowsTransactions { get; set; }
-
-    public KeeperGroup KeeperGroup { get; set; }
-
-    public int Priority { get; set; }
-
-    public List<IdentifiableDto> ParentTypes { get; set; } = new List<IdentifiableDto>();
-}
+public record SaveAccountTypeCommand(
+    Guid? Id,
+    bool Active,
+    string Name,
+    Classification? Classification,
+    bool HasCurrency,
+    bool HasHolder,
+    bool HasKeeper,
+    bool HasInitialBalance,
+    bool CalcFullTimeBalance,
+    bool CanBeDeleted,
+    bool CanChangeActiveStatus,
+    bool CanBeRenamed,
+    bool CanBeCreatedByUser,
+    bool CheckAmountBeforeDeactivate,
+    bool AllowsTransactions,
+    KeeperGroup KeeperGroup,
+    int Priority,
+    List<IdentifiableDto> ParentTypes
+) : IRequest;
