@@ -1,6 +1,5 @@
 using MyBudget.Domain.Core;
 using MyBudget.Domain.Enums;
-using MyBudget.Domain.Enums;
 
 namespace MyBudget.Domain;
 
@@ -16,5 +15,5 @@ public class TransactionItem : BaseEntity
 
     public Guid TransactionId { get; set; }
 
-    public Transaction Transaction { get; set; } = new();
+    public virtual Transaction Transaction { get; set; } = new();
 }

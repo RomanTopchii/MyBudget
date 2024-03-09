@@ -6,9 +6,9 @@ public class AccountTypeAccountTypeLink : BaseEntity
 {
     public Guid AncestorId { get; set; }
 
-    public AccountType Ancestor { get; set; } = new();
+    public virtual AccountType Ancestor { get; set; } = new();
 
     public Guid ChildId { get; set; }
 
-    public AccountType Child { get; set; } = new();
+    public virtual AccountType Child { get; set; } = new();
 }

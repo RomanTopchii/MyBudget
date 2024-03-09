@@ -6,27 +6,27 @@ public class Account : DictionaryEntity
 {
     public Guid? ParentId { get; set; }
 
-    public Account? Parent { get; set; }
+    public virtual Account? Parent { get; set; }
 
     public Guid TypeId { get; set; }
 
-    public AccountType Type { get; set; } = new();
+    public virtual AccountType Type { get; set; } = new();
 
     public Guid? CurrencyId { get; set; }
 
-    public Currency? Currency { get; set; }
+    public virtual Currency? Currency { get; set; }
 
     public Guid? HolderId { get; set; }
 
-    public Holder? Holder { get; set; }
+    public virtual Holder? Holder { get; set; }
 
     public Guid? KeeperId { get; set; }
 
-    public Keeper? Keeper { get; set; }
+    public virtual Keeper? Keeper { get; set; }
 
     public Guid? LinkedAccountId { get; set; }
 
-    public Account? LinkedAccount { get; set; }
+    public virtual Account? LinkedAccount { get; set; }
 
     public virtual ICollection<Account> Children { get; set; } = new List<Account>();
 
