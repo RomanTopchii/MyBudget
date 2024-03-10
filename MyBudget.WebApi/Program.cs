@@ -1,11 +1,18 @@
 using MyBudget.WebApi;
-using FastEndpoints;
-using FastEndpoints.Swagger;
+using MyBudget.WebApi.AutoRegistration;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterApplicationsServices(builder.Configuration);
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = builder.Environment.ApplicationName,
+        Version = "v1" });
+});
+
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -21,9 +28,13 @@ var app = builder.Build();
 MyBudget.Infrastructure.Startup.Configure(app.Services);
 
 app.UseMiddleware<Middleware>();
+app.RegisterApiRoutes();
 
-app.UseFastEndpoints(c => { c.Endpoints.RoutePrefix = "api"; });
-
-app.UseSwaggerGen();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
+        $"{builder.Environment.ApplicationName} v1"));
+}
 
 app.Run();

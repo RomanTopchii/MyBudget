@@ -1,6 +1,3 @@
-using FastEndpoints;
-using FastEndpoints.Swagger;
-
 namespace MyBudget.WebApi;
 
 public static class ProgramExtensions
@@ -9,9 +6,6 @@ public static class ProgramExtensions
         ConfigurationManager configuration)
     {
         services.AddTransient<Middleware>();
-
-        services.AddFastEndpoints(o => o.IncludeAbstractValidators = true);
-        services.SwaggerDocument();
 
         Application.Startup.ConfigureServices(services);
         Infrastructure.Startup.Configure(services, configuration.GetConnectionString("DefaultConnection"));

@@ -21,7 +21,7 @@ public record DeleteCurrencyCommandHandler(
 
         if (currency.Accounts.Any())
         {
-            throw new ObjectUsedInAccountException<Domain.Keeper>(request.Id);
+            throw new ObjectUsedInAccountException<Domain.Currency>(request.Id);
         }
 
         this.CurrencyRepository.Remove(currency);
