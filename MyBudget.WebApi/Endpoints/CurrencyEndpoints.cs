@@ -1,7 +1,7 @@
 using MediatR;
-using Microsoft.OpenApi.Models;
 using MyBudget.Application.Commands.Currency.DeleteCurrency;
 using MyBudget.Application.Commands.Currency.SaveCurrency;
+using MyBudget.Application.Interfaces.Dto;
 using MyBudget.Application.Queries.Currency.GetCurrencies;
 using MyBudget.WebApi.AutoRegistration;
 
@@ -9,23 +9,31 @@ namespace MyBudget.WebApi.Endpoints;
 
 public class CurrencyEndpoints : IApiRoute
 {
-    private const string Name = "Currency";
+    private const string GroupName = "Currency";
 
-    public void Register(WebApplication route)
+    public void Register(IEndpointRouteBuilder builder)
     {
-        var group = route.MapGroup($"api/v1/{Name}")
-            .WithOpenApi(operation => new OpenApiOperation(operation)
-            {
-                Tags = new List<OpenApiTag> { new() { Name = Name } }
-            });
+        var group = builder.MapGroup($"{EndpointConfiguration.BaseApiPath}/{GroupName}");
 
-        group.MapDelete("DeleteCurrency", (Guid id, IMediator mediator) =>
-            mediator.Send(new DeleteCurrencyCommand(Id: id), default));
+        group.MapDelete("DeleteCurrency", DeleteCurrency)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
 
-        group.MapPost("SaveCurrency", (SaveCurrencyCommand model, IMediator mediator) =>
-            mediator.Send(model, default));
+        group.MapPost("SaveCurrency", SaveCurrency)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
 
-        group.MapGet("GetCurrencies", (IMediator mediator) =>
-            mediator.Send(new GetCurrenciesQuery(), default));
+        group.MapGet("GetCurrencies", GetCurrencies)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
     }
+
+    private Task DeleteCurrency(Guid id, IMediator mediator) =>
+        mediator.Send(new DeleteCurrencyCommand(Id: id), default);
+
+    private Task SaveCurrency(SaveCurrencyCommand model, IMediator mediator) =>
+        mediator.Send(model, default);
+
+    private Task<List<CurrencySimpleDto>> GetCurrencies(IMediator mediator) =>
+        mediator.Send(new GetCurrenciesQuery(), default);
 }

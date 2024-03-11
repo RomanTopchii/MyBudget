@@ -7,6 +7,7 @@ public static class WebApplicationExtension
     public static void RegisterApiRoutes(this WebApplication app)
     {
         var routeTypes = GetApiRouteTypes();
+        
         foreach (var routeType in routeTypes)
         {
             var route = Activator.CreateInstance(routeType) as IApiRoute;

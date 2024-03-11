@@ -1,7 +1,7 @@
 using MediatR;
-using Microsoft.OpenApi.Models;
 using MyBudget.Application.Commands.Keeper.DeleteKeeper;
 using MyBudget.Application.Commands.Keeper.SaveKeeper;
+using MyBudget.Application.Interfaces.Dto;
 using MyBudget.Application.Queries.Keeper.GetKeepers;
 using MyBudget.WebApi.AutoRegistration;
 
@@ -9,23 +9,31 @@ namespace MyBudget.WebApi.Endpoints;
 
 public class KeeperEndpoints : IApiRoute
 {
-    private readonly string _name = "Keeper";
+    private const string GroupName = "Keeper";
 
-    public void Register(WebApplication route)
+    public void Register(IEndpointRouteBuilder builder)
     {
-        var group = route.MapGroup($"api/v1/{this._name}")
-            .WithOpenApi(operation => new OpenApiOperation(operation)
-            {
-                Tags = new List<OpenApiTag> { new() { Name = this._name } }
-            });
+        var group = builder.MapGroup($"{EndpointConfiguration.BaseApiPath}/{GroupName}");
 
-        group.MapDelete("DeleteKeeper", (Guid id, IMediator mediator) =>
-            mediator.Send(new DeleteKeeperCommand(Id: id), default));
+        group.MapDelete("DeleteKeeper", DeleteKeeper)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
 
-        group.MapPost("SaveKeeper", (SaveKeeperCommand model, IMediator mediator) =>
-            mediator.Send(model, default));
-        
-        group.MapGet("GetKeepers", (IMediator mediator) =>
-            mediator.Send(new GetKeepersQuery(), default));
+        group.MapPost("SaveKeeper", SaveKeeper)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
+
+        group.MapGet("GetKeepers", GetKeepers)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
     }
+
+    private Task DeleteKeeper(Guid id, IMediator mediator) =>
+        mediator.Send(new DeleteKeeperCommand(Id: id), default);
+
+    private Task SaveKeeper(SaveKeeperCommand model, IMediator mediator) =>
+        mediator.Send(model, default);
+
+    private Task<List<KeeperSimpleDto>> GetKeepers(IMediator mediator) =>
+        mediator.Send(new GetKeepersQuery(), default);
 }

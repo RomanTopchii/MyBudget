@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.OpenApi.Models;
 using MyBudget.Application.Commands.Account.SaveAccount;
 using MyBudget.WebApi.AutoRegistration;
 
@@ -7,17 +6,17 @@ namespace MyBudget.WebApi.Endpoints;
 
 public class AccountEndpoints : IApiRoute
 {
-    private readonly string _name = "Account";
+    private const string GroupName = "Account";
 
-    public void Register(WebApplication route)
+    public void Register(IEndpointRouteBuilder builder)
     {
-        var group = route.MapGroup($"api/v1/{this._name}")
-            .WithOpenApi(operation => new OpenApiOperation(operation)
-            {
-                Tags = new List<OpenApiTag> { new() { Name = this._name } }
-            });
+        var group = builder.MapGroup($"{EndpointConfiguration.BaseApiPath}/{GroupName}");
 
-        group.MapPost("SaveAccount", (SaveAccountCommand model, IMediator mediator) =>
-            mediator.Send(model, default));
+        group.MapPost("SaveAccount", SaveAccount)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
     }
+
+    private Task SaveAccount(SaveAccountCommand model, IMediator mediator) =>
+        mediator.Send(model, default);
 }

@@ -7,12 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.RegisterApplicationsServices(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new() { Title = builder.Environment.ApplicationName,
-        Version = "v1" });
-});
-
+builder.Services.AddSwaggerGen();
+builder.Services.AddApiVersioning()
+    .AddApiExplorer()
+    .EnableApiVersionBinding();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -33,8 +31,19 @@ app.RegisterApiRoutes();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
-        $"{builder.Environment.ApplicationName} v1"));
+    app.UseSwaggerUI(
+        options =>
+        {
+            var descriptions = app.DescribeApiVersions();
+
+            foreach (var description in descriptions)
+            {
+                var url = $"/swagger/{description.GroupName}/swagger.json";
+                var name = description.GroupName.ToUpperInvariant();
+                options.SwaggerEndpoint(url, name);
+                // options.RoutePrefix = string.Empty;
+            }
+        });
 }
 
 app.Run();

@@ -1,7 +1,7 @@
 using MediatR;
-using Microsoft.OpenApi.Models;
 using MyBudget.Application.Commands.Transaction.DeleteTransaction;
 using MyBudget.Application.Commands.Transaction.SaveTransaction;
+using MyBudget.Application.Interfaces.Dto;
 using MyBudget.Application.Queries.Transaction.GetTransactions;
 using MyBudget.WebApi.AutoRegistration;
 
@@ -9,23 +9,31 @@ namespace MyBudget.WebApi.Endpoints;
 
 public class TransactionEndpoints : IApiRoute
 {
-    private readonly string _name = "Transaction";
+    private const string GroupName = "Transaction";
 
-    public void Register(WebApplication route)
+    public void Register(IEndpointRouteBuilder builder)
     {
-        var group = route.MapGroup($"api/v1/{this._name}")
-            .WithOpenApi(operation => new OpenApiOperation(operation)
-            {
-                Tags = new List<OpenApiTag> { new() { Name = this._name } }
-            });
-        
-        group.MapDelete("DeleteTransaction", (Guid id, IMediator mediator) =>
-            mediator.Send(new DeleteTransactionCommand(Id: id), default));
-        
-        group.MapPost("SaveTransaction", (SaveTransactionCommand model, IMediator mediator) =>
-            mediator.Send(model, default));
+        var group = builder.MapGroup($"{EndpointConfiguration.BaseApiPath}/{GroupName}");
 
-        group.MapGet("GetTransactions", (IMediator mediator) =>
-            mediator.Send(new GetTransactionsQuery(), default));
+        group.MapDelete("DeleteTransaction", DeleteTransaction)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
+
+        group.MapPost("SaveTransaction", SaveTransaction)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
+
+        group.MapGet("GetTransactions", GetTransactions)
+            .WithApiVersionSet(builder.NewApiVersionSet(GroupName).Build())
+            .HasApiVersion(1.0);
     }
+
+    private Task DeleteTransaction(Guid id, IMediator mediator) =>
+        mediator.Send(new DeleteTransactionCommand(Id: id), default);
+
+    private Task SaveTransaction(SaveTransactionCommand model, IMediator mediator) =>
+        mediator.Send(model, default);
+
+    private Task<List<TransactionDto>> GetTransactions(IMediator mediator) =>
+        mediator.Send(new GetTransactionsQuery(), default);
 }
