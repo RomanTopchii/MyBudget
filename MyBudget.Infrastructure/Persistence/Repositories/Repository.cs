@@ -54,4 +54,9 @@ public class Repository<T> : IRepository<T> where T : class
     {
         dbSet.RemoveRange(entities);
     }
+
+    public IQueryable<T> Query()
+    {
+        return this.dbSet.AsQueryable();
+    }
 }

@@ -20,4 +20,6 @@ public interface IRepository<T>
     void Remove(T entity);
 
     void RemoveRange(IEnumerable<T> entities);
+
+    IQueryable<T> Query();
 }

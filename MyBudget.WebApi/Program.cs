@@ -1,5 +1,6 @@
 using MyBudget.WebApi;
 using MyBudget.WebApi.AutoRegistration;
+using MyBudget.WebApi.Hangfire;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApiVersioning()
     .AddApiExplorer()
     .EnableApiVersionBinding();
+
+builder.Services.RegisterHangfireServices(builder.Configuration);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -45,5 +48,8 @@ if (app.Environment.IsDevelopment())
             }
         });
 }
+
+app.RegisterHangfireDashboard();
+app.RegisterHangfireJobs();
 
 app.Run();
