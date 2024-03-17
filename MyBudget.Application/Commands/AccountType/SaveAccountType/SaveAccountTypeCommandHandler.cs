@@ -54,20 +54,23 @@ public record SaveAccountTypeCommandHandler(
         var accountTypeAccountTypeLinks = await this.AccountTypeAccountTypeLinkRepository
             .FindAsync(x => x.ChildId == request.Id);
 
-        foreach (var parentIdToAdd in request.ParentTypes.Select(x => x.Id)
+        foreach (var parentIdToAdd in request.ParentTypes
                      .Where(x => !accountTypeAccountTypeLinks.Select(y => y.AncestorId).Contains(x)))
         {
+            var ancestor = await this.AccountTypeRepository.GetByIdAsync(parentIdToAdd) ??
+                           throw new ObjectNotFoundException<Domain.AccountType>(parentIdToAdd);
+            
             var accountTypeAccountTypeLink = new AccountTypeAccountTypeLink
             {
                 Active = true,
-                AncestorId = parentIdToAdd,
-                ChildId = accountType.Id
+                Ancestor = ancestor,
+                Child = accountType
             };
             await this.AccountTypeAccountTypeLinkRepository.AddAsync(accountTypeAccountTypeLink);
         }
 
         foreach (var accountTypeAccountTypeLink in accountTypeAccountTypeLinks.Where(x => !request.ParentTypes
-                     .Select(x => x.Id).Contains(x.AncestorId)))
+                     .Contains(x.AncestorId)))
         {
             this.AccountTypeAccountTypeLinkRepository.Remove(accountTypeAccountTypeLink);
         }

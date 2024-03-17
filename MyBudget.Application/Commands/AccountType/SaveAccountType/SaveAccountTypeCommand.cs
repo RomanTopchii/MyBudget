@@ -1,6 +1,5 @@
 using MediatR;
 using MyBudget.Domain.Enums;
-using MyBudget.Application.Interfaces.Dto.Core;
 
 namespace MyBudget.Application.Commands.AccountType.SaveAccountType;
 
@@ -22,5 +21,5 @@ public record SaveAccountTypeCommand(
     bool AllowsTransactions,
     KeeperGroup KeeperGroup,
     int Priority,
-    List<IdentifiableDto> ParentTypes
+    List<Guid> ParentTypes
 ) : IRequest;
