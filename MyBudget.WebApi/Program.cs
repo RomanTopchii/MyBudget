@@ -2,6 +2,7 @@ using MyBudget.WebApi;
 using MyBudget.WebApi.AutoRegistration;
 using MyBudget.WebApi.Hangfire;
 using Serilog;
+using Serilog.Sinks.MSSqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +20,16 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Host.UseSerilog((hostContext, services, configuration) =>
 {
+    var sinkOptions = new MSSqlServerSinkOptions
+    {
+        AutoCreateSqlDatabase = true,
+        AutoCreateSqlTable = true,
+        TableName = "Log"
+    };
+
     configuration
         .MinimumLevel.Error()
-        .WriteTo.MSSqlServer(connectionString, "Logs", autoCreateSqlTable: true);
+        .WriteTo.MSSqlServer(connectionString, sinkOptions);
 });
 
 var app = builder.Build();

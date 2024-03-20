@@ -1,14 +1,7 @@
 namespace MyBudget.WebApi;
 
-public class Middleware : IMiddleware
+public class Middleware(ILogger<Middleware> logger) : IMiddleware
 {
-    private readonly ILogger<Middleware> _logger;
-
-    public Middleware(ILogger<Middleware> logger)
-    {
-        this._logger = logger;
-    }
-
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
@@ -17,7 +10,7 @@ public class Middleware : IMiddleware
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, exception?.Message);
+            logger.LogError(exception, exception.Message);
             throw;
         }
     }

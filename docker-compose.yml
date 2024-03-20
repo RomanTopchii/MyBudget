@@ -1,0 +1,28 @@
+﻿services:
+  mybudget-webapi:
+    container_name: mybudget-webapi
+    environment:
+      ASPNETCORE_HTTP_PORTS: 5000
+      ASPNETCORE_ENVIRONMENT: Development
+    build:
+      context: .
+      dockerfile: MyBudget.WebApi/Dockerfile
+    ports:
+      - 5000:5000
+    depends_on:
+      - mybudget-db
+
+  mybudget-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mybudget-db
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: Passw1rd
+      MSSQL_PID: Express
+    volumes:
+      - storage:/var/opt/mssql
+    ports:
+      - 1433:1433
+
+volumes:
+  storage:
