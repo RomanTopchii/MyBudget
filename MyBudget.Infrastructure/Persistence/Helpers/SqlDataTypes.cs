@@ -10,6 +10,7 @@ public static class SqlDataTypes
     public static readonly string NvarCharMax = "nvarchar(max)";
     public static readonly string SmallInt = "smallint";
     public static readonly string Int = "int";
+    public static readonly string BigInt = "bigint";
     public static readonly string Float = "float";
 
 }

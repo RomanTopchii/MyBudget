@@ -1,8 +1,10 @@
+using MyBudget.Domain.Attributes;
 using MyBudget.Domain.Core;
 using MyBudget.Domain.Enums;
 
 namespace MyBudget.Domain;
 
+[Auditable]
 public class Transaction : BaseEntity
 {
     public DateTime Date { get; set; }

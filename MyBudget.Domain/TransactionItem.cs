@@ -1,8 +1,10 @@
+using MyBudget.Domain.Attributes;
 using MyBudget.Domain.Core;
 using MyBudget.Domain.Enums;
 
 namespace MyBudget.Domain;
 
+[Auditable]
 public class TransactionItem : BaseEntity
 {
     public Double Amount { get; set; }

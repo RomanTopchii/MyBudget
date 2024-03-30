@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MyBudget.Domain.Audit.Generated;
 
 namespace MyBudget.Infrastructure.Persistence;
 
@@ -14,4 +15,6 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         modelBuilder.UseCollation("Cyrillic_General_CI_AS");
     }
+
+    public DbSet<AuditRevisionEntity> AuditRevisionEntity { get; set; }
 }
