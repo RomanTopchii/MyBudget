@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterApplicationsServices(builder.Configuration);
 
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApiVersioning()
@@ -36,6 +38,7 @@ var app = builder.Build();
 
 MyBudget.Infrastructure.Startup.Configure(app.Services);
 
+app.UseSession();
 app.UseMiddleware<Middleware>();
 app.RegisterApiRoutes();
 

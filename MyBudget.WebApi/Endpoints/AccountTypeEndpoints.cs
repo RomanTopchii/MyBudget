@@ -1,6 +1,7 @@
 using MediatR;
 using MyBudget.Application.Commands.AccountType.SaveAccountType;
 using MyBudget.WebApi.AutoRegistration;
+using MyBudget.WebApi.Endpoints.Configurations;
 
 namespace MyBudget.WebApi.Endpoints;
 

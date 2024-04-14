@@ -4,6 +4,7 @@ using MyBudget.Application.Commands.Currency.SaveCurrency;
 using MyBudget.Application.Interfaces.Dto;
 using MyBudget.Application.Queries.Currency.GetCurrencies;
 using MyBudget.WebApi.AutoRegistration;
+using MyBudget.WebApi.Endpoints.Configurations;
 
 namespace MyBudget.WebApi.Endpoints;
 

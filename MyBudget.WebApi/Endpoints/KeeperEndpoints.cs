@@ -4,6 +4,7 @@ using MyBudget.Application.Commands.Keeper.SaveKeeper;
 using MyBudget.Application.Interfaces.Dto;
 using MyBudget.Application.Queries.Keeper.GetKeepers;
 using MyBudget.WebApi.AutoRegistration;
+using MyBudget.WebApi.Endpoints.Configurations;
 
 namespace MyBudget.WebApi.Endpoints;
 

@@ -4,6 +4,7 @@ using MyBudget.Application.Commands.Transaction.SaveTransaction;
 using MyBudget.Application.Interfaces.Dto;
 using MyBudget.Application.Queries.Transaction.GetTransactions;
 using MyBudget.WebApi.AutoRegistration;
+using MyBudget.WebApi.Endpoints.Configurations;
 
 namespace MyBudget.WebApi.Endpoints;
 

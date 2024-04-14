@@ -4,6 +4,7 @@ using MyBudget.Application.Commands.Holder.SaveHolder;
 using MyBudget.Application.Interfaces.Dto;
 using MyBudget.Application.Queries.Holder.GetHolders;
 using MyBudget.WebApi.AutoRegistration;
+using MyBudget.WebApi.Endpoints.Configurations;
 
 namespace MyBudget.WebApi.Endpoints;
 

@@ -1,4 +1,4 @@
-namespace MyBudget.WebApi;
+namespace MyBudget.WebApi.Endpoints.Configurations;
 
 public abstract class EndpointConfiguration
 {
