@@ -4,7 +4,10 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+<!--        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>-->
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
     </PropertyGroup>
 
     <ItemGroup>
@@ -24,10 +27,10 @@
       <ProjectReference Include="..\MyBudget.Infrastructure\MyBudget.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
+<!--    <ItemGroup>-->
+<!--      <Content Include="..\.dockerignore">-->
+<!--        <Link>.dockerignore</Link>-->
+<!--      </Content>-->
+<!--    </ItemGroup>-->
 
 </Project>
