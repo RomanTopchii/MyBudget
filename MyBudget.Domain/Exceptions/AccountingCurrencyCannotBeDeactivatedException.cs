@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace MyBudget.Application.Exceptions;
+namespace MyBudget.Domain.Exceptions;
 
 [Serializable]
 public class AccountingCurrencyCannotBeDeactivatedException : Exception

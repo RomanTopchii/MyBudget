@@ -2,7 +2,7 @@ using MyBudget.Application.Interfaces.Dto.Core;
 
 namespace MyBudget.Application.Interfaces.Dto;
 
-public class CurrencySimpleDto : DictionaryEntityDto
+public class CurrencySimpleDto : BaseEntityDto
 {
     public string Code { get; set; }
     public int Iso4217 { get; set; }

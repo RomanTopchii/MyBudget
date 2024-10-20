@@ -12,7 +12,7 @@ public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
     {
         builder.ToTable("Currency", "app");
 
-        DictionaryEntityConfiguration.Configure(builder);
+        BaseEntityConfiguration.Configure(builder);
 
         builder.Property(x => x.Code)
             .HasColumnName("code")
@@ -21,6 +21,11 @@ public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
         builder.Property(x => x.Iso4217)
             .HasColumnName("iso4217")
             .HasColumnType(SqlDataTypes.Int)
+            .IsRequired();
+
+        builder.Property(x => x.IsAccounting)
+            .HasColumnName("isAccounting")
+            .HasColumnType(SqlDataTypes.Bit)
             .IsRequired();
 
         builder.HasIndex(x => x.Code)

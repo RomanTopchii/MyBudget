@@ -1,7 +1,6 @@
 using System.Runtime.Serialization;
-using MyBudget.Domain;
 
-namespace MyBudget.Application.Exceptions;
+namespace MyBudget.Domain.Exceptions;
 
 [Serializable]
 public class CurrencyWithSameCodeAlreadyExistsException: Exception

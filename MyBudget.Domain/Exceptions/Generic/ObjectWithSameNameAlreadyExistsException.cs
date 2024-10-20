@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using MyBudget.Domain.Core;
 
-namespace MyBudget.Application.Exceptions;
+namespace MyBudget.Domain.Exceptions.Generic;
 
 [Serializable]
 public class ObjectWithSameNameAlreadyExistsException<T>: Exception

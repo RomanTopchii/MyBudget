@@ -1,24 +1,19 @@
 using MediatR;
-using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Persistence;
 using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Domain.Core;
+using MyBudget.Domain.Exceptions;
+using MyBudget.Domain.Exceptions.Generic;
 
 namespace MyBudget.Application.Commands.Currency.SaveCurrency;
 
 public record SaveCurrencyCommandHandler(
-        ICurrencyRepository CurrencyRepository,
-        IUnitOfWork UnitOfWork)
+    ICurrencyRepository CurrencyRepository,
+    IUnitOfWork UnitOfWork)
     : IRequestHandler<SaveCurrencyCommand>
 {
     public async Task Handle(SaveCurrencyCommand request, CancellationToken cancellationToken)
     {
-        if (await this.CurrencyRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.Id))
-        {
-            throw new ObjectWithSameNameAlreadyExistsException<Domain.Currency>(new DictionaryEntity
-                { Name = request.Name });
-        }
-
         if (await this.CurrencyRepository.AnyAsync(x => x.Code == request.Code && x.Id != request.Id))
         {
             throw new CurrencyWithSameCodeAlreadyExistsException(new Domain.Currency { Code = request.Code });
@@ -48,7 +43,6 @@ public record SaveCurrencyCommandHandler(
 
         currency.Id = request.Id ?? Guid.NewGuid();
         currency.Active = request.Active;
-        currency.Name = request.Name;
         currency.Code = request.Code;
         currency.Iso4217 = request.Iso4217;
         currency.IsAccounting = false;

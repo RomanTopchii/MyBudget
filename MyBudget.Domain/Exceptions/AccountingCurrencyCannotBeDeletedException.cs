@@ -1,7 +1,6 @@
 using System.Runtime.Serialization;
-using MyBudget.Domain;
 
-namespace MyBudget.Application.Exceptions;
+namespace MyBudget.Domain.Exceptions;
 
 [Serializable]
 public class AccountingCurrencyCannotBeDeletedException
@@ -28,7 +27,7 @@ public class AccountingCurrencyCannotBeDeletedException
     }
 
     public AccountingCurrencyCannotBeDeletedException(Currency currency)
-        : base($"Accounting currency \"{currency.Name}\" can not be deleted")
+        : base($"Accounting currency \"{currency.Code}\" can not be deleted")
     {
     }
 }

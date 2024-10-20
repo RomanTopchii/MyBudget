@@ -1,9 +1,10 @@
 using MediatR;
-using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Persistence;
 using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Domain;
 using MyBudget.Domain.Enums;
+using MyBudget.Domain.Exceptions;
+using MyBudget.Domain.Exceptions.Generic;
 
 namespace MyBudget.Application.Commands.Transaction.DeleteTransaction;
 

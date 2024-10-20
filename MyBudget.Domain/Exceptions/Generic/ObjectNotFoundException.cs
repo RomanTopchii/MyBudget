@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace MyBudget.Application.Exceptions;
+namespace MyBudget.Domain.Exceptions.Generic;
 
 [Serializable]
 public class ObjectNotFoundException<T>

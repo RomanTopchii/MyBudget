@@ -4,7 +4,7 @@ using MyBudget.Domain.Core;
 namespace MyBudget.Domain;
 
 [Auditable]
-public class Currency : DictionaryEntity
+public class Currency : BaseEntity
 {
     public string Code { get; set; } = string.Empty;
     

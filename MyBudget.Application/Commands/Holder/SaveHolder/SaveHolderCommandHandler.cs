@@ -1,8 +1,9 @@
 using MediatR;
-using MyBudget.Application.Exceptions;
 using MyBudget.Application.Interfaces.Persistence;
 using MyBudget.Application.Interfaces.Persistence.Repositories;
 using MyBudget.Domain.Core;
+using MyBudget.Domain.Exceptions;
+using MyBudget.Domain.Exceptions.Generic;
 
 namespace MyBudget.Application.Commands.Holder.SaveHolder;
 
