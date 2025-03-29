@@ -1,0 +1,20 @@
+<kendo-appbar position="top">
+  <kendo-appbar-section>
+    <h1 class="title">MyBudget</h1>
+  </kendo-appbar-section>
+
+  <kendo-appbar-spacer width="32px"></kendo-appbar-spacer>
+
+  <kendo-appbar-section>
+    <ul>
+      <li><span [routerLink]="TRANSACTIONS_PAGE_ADDRESS">Transactions</span></li>
+      <li><span [routerLink]="ANALYTICS_PAGE_ADDRESS">Analytics</span></li>
+      <li><span [routerLink]="ACCOUNTS_PAGE_ADDRESS">Accounts</span></li>
+    </ul>
+  </kendo-appbar-section>
+
+  <kendo-appbar-spacer></kendo-appbar-spacer>
+
+  <kendo-appbar-section class="actions">
+  </kendo-appbar-section>
+</kendo-appbar>
