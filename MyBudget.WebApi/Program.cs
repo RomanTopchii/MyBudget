@@ -1,5 +1,4 @@
 using MyBudget.WebApi;
-using MyBudget.WebApi.AutoRegistration;
 using MyBudget.WebApi.Hangfire;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
@@ -10,15 +9,12 @@ builder.Services.RegisterApplicationsServices(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApiVersioning()
-    .AddApiExplorer()
-    .EnableApiVersionBinding();
 
 builder.Services.RegisterHangfireServices(builder.Configuration);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Host.UseSerilog((hostContext, services, configuration) =>
+builder.Host.UseSerilog((_, _, configuration) =>
 {
     var sinkOptions = new MSSqlServerSinkOptions
     {
@@ -37,25 +33,16 @@ var app = builder.Build();
 MyBudget.Infrastructure.Startup.Configure(app.Services);
 
 app.UseMiddleware<Middleware>();
-app.RegisterApiRoutes();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(
-        options =>
-        {
-            var descriptions = app.DescribeApiVersions();
-
-            foreach (var description in descriptions)
-            {
-                var url = $"/swagger/{description.GroupName}/swagger.json";
-                var name = description.GroupName.ToUpperInvariant();
-                options.SwaggerEndpoint(url, name);
-                // options.RoutePrefix = string.Empty;
-            }
-        });
+    app.UseSwaggerUI();
 }
+
+app.UseRouting();
+//app.UseAuthorization();
+app.MapControllers();
 
 app.RegisterHangfireDashboard();
 app.RegisterHangfireJobs();

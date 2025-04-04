@@ -1,0 +1,14 @@
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using MyBudget.Application.Commands.Account.SaveAccount;
+
+namespace MyBudget.WebApi.Controllers;
+
+[Route("[controller]/[action]")]
+[ApiController]
+public class AccountController(IMediator mediator) : ControllerBase
+{
+    [HttpPost]
+    public Task SaveAccount(SaveAccountCommand model) 
+        => mediator.Send(model, default);
+}
