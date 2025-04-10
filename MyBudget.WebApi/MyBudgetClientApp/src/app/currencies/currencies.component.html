@@ -1,0 +1,35 @@
+<kendo-grid
+  [kendoGridBinding]="data"
+  [sortable]="true"
+  [resizable]="true"
+  [filterable]="true"
+  [selectable]="selectableSettings"
+  (selectionChange)="selectItem($event)"
+>
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoButton
+            [svgIcon]="plusIcon"
+            (click)="onAddClick()"
+    >Add
+    </button>
+
+    <button kendoButton
+            [disabled]="this.selectedCurrency==null"
+            [svgIcon]="pencilIcon"
+            (click)="onEditClick()"
+    >Edit
+    </button>
+
+    <button kendoButton
+            themeColor="error"
+            fillMode="outline"
+            [disabled]="this.selectedCurrency==null"
+            [svgIcon]="trashIcon"
+            (click)="onDeleteClick()"
+    >Delete
+    </button>
+  </ng-template>
+  <kendo-grid-column field="code" title="Code"> </kendo-grid-column>
+  <kendo-grid-column field="iso4217" title="ISO4217"> </kendo-grid-column>
+  <kendo-grid-column field="active" title="Active" filter="boolean"></kendo-grid-column>
+</kendo-grid>

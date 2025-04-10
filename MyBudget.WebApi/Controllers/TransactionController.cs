@@ -7,19 +7,25 @@ using MyBudget.Application.Queries.Transaction.GetTransactions;
 
 namespace MyBudget.WebApi.Controllers;
 
-[Route("[controller]/[action]")]
+[Route("api/transactions")]
 [ApiController]
-public class TransactionController (IMediator mediator): ControllerBase
+public class TransactionController(IMediator mediator) : ControllerBase
 {
     [HttpDelete]
-    public Task DeleteTransaction(Guid id, CancellationToken cancellationToken) =>
-        mediator.Send(new DeleteTransactionCommand(Id: id), cancellationToken);
-    
+    public Task DeleteTransaction(Guid id, CancellationToken cancellationToken)
+    {
+        return mediator.Send(new DeleteTransactionCommand(id), cancellationToken);
+    }
+
     [HttpPost]
-    public Task SaveTransaction(SaveTransactionCommand model, CancellationToken cancellationToken) =>
-        mediator.Send(model, cancellationToken);
-    
+    public Task SaveTransaction(SaveTransactionCommand model, CancellationToken cancellationToken)
+    {
+        return mediator.Send(model, cancellationToken);
+    }
+
     [HttpGet]
-    public Task<List<TransactionDto>> GetTransactions(CancellationToken cancellationToken) =>
-        mediator.Send(new GetTransactionsQuery(), cancellationToken);
+    public Task<List<TransactionDto>> GetTransactions(CancellationToken cancellationToken)
+    {
+        return mediator.Send(new GetTransactionsQuery(), cancellationToken);
+    }
 }

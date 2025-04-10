@@ -7,7 +7,7 @@ using MyBudget.Application.Queries.Holder.GetHolders;
 
 namespace MyBudget.WebApi.Controllers;
 
-[Route("[controller]/[action]")]
+[Route("api/holders")]
 [ApiController]
 public class HolderController (IMediator mediator): ControllerBase
 {

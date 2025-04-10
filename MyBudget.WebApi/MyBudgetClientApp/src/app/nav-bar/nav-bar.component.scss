@@ -20,8 +20,12 @@ li {
 }
 li:hover {
   cursor: pointer;
-  color: #d6002f;
+  color: red;
 }
 .actions .k-button {
   padding: 0;
+}
+
+.active {
+  color: red;
 }

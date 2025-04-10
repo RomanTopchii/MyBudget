@@ -4,7 +4,7 @@ using MyBudget.Application.Commands.Account.SaveAccount;
 
 namespace MyBudget.WebApi.Controllers;
 
-[Route("[controller]/[action]")]
+[Route("api/accounts")]
 [ApiController]
 public class AccountController(IMediator mediator) : ControllerBase
 {

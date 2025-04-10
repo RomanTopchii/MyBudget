@@ -11,6 +11,7 @@ public record GetCurrenciesQueryHandler(ICurrencyRepository CurrencyRepository)
     {
         return (await this.CurrencyRepository.GetAllAsync())
             .Select(x => new CurrencySimpleDto(x))
+            .OrderBy(x => x.Code)
             .ToList();
     }
 }
