@@ -20,12 +20,12 @@ export class CurrencyService extends BaseHttpService {
     return this.post<void>('set-accounting', command);
   }
 
-  public deleteCurrency(id: Guid){
+  public deleteCurrency(id: Guid): Observable<void>{
     return this.delete<void>(`?id=${id.toString()}`);
   }
 
   public getCurrencies(): Observable<CurrencySimpleDto[]>{
-    return this.get()
+    return this.get();
   }
 
   public getCurrencyById(id: Guid): Observable<CurrencySimpleDto>{

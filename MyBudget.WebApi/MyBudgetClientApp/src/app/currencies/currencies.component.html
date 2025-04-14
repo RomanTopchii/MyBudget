@@ -8,13 +8,17 @@
 >
   <ng-template kendoGridToolbarTemplate>
     <button kendoButton
+            themeColor="success"
+            fillMode="outline"
             [svgIcon]="plusIcon"
             (click)="onAddClick()"
     >Add
     </button>
 
     <button kendoButton
-            [disabled]="this.selectedCurrency==null"
+            themeColor="info"
+            fillMode="outline"
+            [disabled]="this.selectedCurrency == null"
             [svgIcon]="pencilIcon"
             (click)="onEditClick()"
     >Edit
@@ -23,13 +27,22 @@
     <button kendoButton
             themeColor="error"
             fillMode="outline"
-            [disabled]="this.selectedCurrency==null"
+            [disabled]="this.selectedCurrency == null"
             [svgIcon]="trashIcon"
             (click)="onDeleteClick()"
     >Delete
     </button>
+
+    <button kendoButton
+            themeColor="warning"
+            fillMode="outline"
+            [disabled]="this.selectedCurrency == null || (this.selectedCurrency != null && this.selectedCurrency.isAccounting == true)"
+            (click)="onSetAccountingClick()"
+    >Set accounting currency
+    </button>
   </ng-template>
-  <kendo-grid-column field="code" title="Code"> </kendo-grid-column>
-  <kendo-grid-column field="iso4217" title="ISO4217"> </kendo-grid-column>
+  <kendo-grid-column field="code" title="Code"></kendo-grid-column>
+  <kendo-grid-column field="iso4217" title="ISO4217"></kendo-grid-column>
+  <kendo-grid-column field="isAccounting" title="Accounting" filter="boolean"></kendo-grid-column>
   <kendo-grid-column field="active" title="Active" filter="boolean"></kendo-grid-column>
 </kendo-grid>

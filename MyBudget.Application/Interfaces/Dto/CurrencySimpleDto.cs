@@ -6,10 +6,12 @@ public class CurrencySimpleDto : BaseEntityDto
 {
     public string Code { get; set; }
     public int Iso4217 { get; set; }
-    
+    public bool IsAccounting { get; set; }
+
     public CurrencySimpleDto(Domain.Currency domain) : base(domain)
     {
         this.Code = domain.Code;
         this.Iso4217 = domain.Iso4217;
+        this.IsAccounting = domain.IsAccounting;
     }
 }

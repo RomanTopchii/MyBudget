@@ -10,6 +10,8 @@ import {pencilIcon, plusIcon, SVGIcon, trashIcon} from '@progress/kendo-svg-icon
 import {ButtonComponent} from '@progress/kendo-angular-buttons';
 import {DialogService} from '@progress/kendo-angular-dialog';
 import {CurrencyDialogComponent} from './currency-dialog/currency-dialog.component';
+import {LoaderService} from '../shared/loader.service';
+import {AlertService} from '../shared/alert.service';
 
 @Component({
   selector: 'app-currencies',
@@ -34,7 +36,8 @@ export class CurrenciesComponent
     mode: 'single',
   };
 
-  constructor(private service: CurrencyService,
+  constructor(private currencyService: CurrencyService,
+              private loaderService: LoaderService,
               private dialogService: DialogService) {
   }
 
@@ -43,16 +46,20 @@ export class CurrenciesComponent
   }
 
   private loadData() {
-    this.service.getCurrencies().subscribe({
-      next: (result) => this.data = result,
-      error: (err) => {
+    this.loaderService.showLoader();
+    this.currencyService.getCurrencies().subscribe({
+      next: (result) => {
+        this.data = result
+        this.loaderService.hideLoader();
+      },
+      error: _ => {
+        this.loaderService.hideLoader();
       }
     });
   }
 
   protected selectItem(event: any): void {
     this.selectedCurrency = event.selectedRows[0].dataItem;
-    console.log(this.selectedCurrency);
   }
 
   protected onEditClick() {
@@ -63,7 +70,7 @@ export class CurrenciesComponent
     const dialogReg = this.dialogService.open({content: CurrencyDialogComponent});
     dialogReg.result.subscribe(result => {
       if (result == true) {
-        this.ngOnInit()
+        this.loadData();
       }
     });
 
@@ -98,13 +105,43 @@ export class CurrenciesComponent
 
     dialogRef.result.subscribe(result => {
       if (result == actions[0]) {
-        this.service.deleteCurrency(this.selectedCurrency!.id).subscribe({
-          next: (result) => {
+        this.loaderService.showLoader();
+
+        this.currencyService.deleteCurrency(this.selectedCurrency!.id).subscribe({
+          next: _ => {
             this.loadData();
-          },
-          error: (err) => {
           }
         });
+      }
+    });
+  }
+
+  protected onSetAccountingClick() {
+    if (!this.selectedCurrency) {
+      return;
+    }
+
+    const actions = [
+      {text: 'Yes', themeColor: 'default'},
+      {text: 'No'}
+    ];
+
+    const dialogRef = this.dialogService.open({
+      title: 'Set accounting currency',
+      content: `Do you want set "${this.selectedCurrency.code}" as accounting currency?`,
+      actions: actions
+    });
+
+    dialogRef.result.subscribe(result => {
+      if (result == actions[0]) {
+        this.loaderService.showLoader();
+
+        this.currencyService.setAccountingCurrency({newAccountingCurrencyId: this.selectedCurrency!.id})
+          .subscribe({
+            next: _ => {
+              this.loadData();
+            }
+          });
       }
     });
   }

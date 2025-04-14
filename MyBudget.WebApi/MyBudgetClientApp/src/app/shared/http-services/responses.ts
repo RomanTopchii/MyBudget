@@ -26,6 +26,7 @@ export interface AccountSimpleDto extends DictionaryEntityDto {}
 export interface CurrencySimpleDto extends BaseEntityDto {
   code: string;
   iso4217: number;
+  isAccounting: boolean;
 }
 
 export interface HolderSimpleDto extends DictionaryEntityDto {}

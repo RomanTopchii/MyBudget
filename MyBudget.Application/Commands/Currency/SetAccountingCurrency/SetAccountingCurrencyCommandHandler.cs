@@ -7,8 +7,8 @@ using MyBudget.Domain.Exceptions.Generic;
 namespace MyBudget.Application.Commands.Currency.SetAccountingCurrency;
 
 public record SetAccountingCurrencyCommandHandler(
-        ICurrencyRepository CurrencyRepository,
-        IUnitOfWork UnitOfWork)
+    ICurrencyRepository CurrencyRepository,
+    IUnitOfWork UnitOfWork)
     : IRequestHandler<SetAccountingCurrencyCommand>
 {
     public async Task Handle(SetAccountingCurrencyCommand request, CancellationToken cancellationToken)
@@ -27,7 +27,8 @@ public record SetAccountingCurrencyCommandHandler(
         else
         {
             if (await this.CurrencyRepository.AnyAsync(x =>
-                    x.Id == currentAccountingCurrency.Id && x.Accounts.Any(y => y.TransactionItems.Any())))
+                    x.Id == currentAccountingCurrency.Id &&
+                    x.Accounts.Any(y => y.TransactionItems.Any())))
             {
                 throw new CurrentAccountingCurrencyAlreadyAccountsWithTransactionsException();
             }
