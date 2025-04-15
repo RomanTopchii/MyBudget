@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {
-    ACCOUNTS_PAGE_ADDRESS,
-    ANALYTICS_PAGE_ADDRESS,
-    CURRENCIES_PAGE_ADDRESS,
-    TRANSACTIONS_PAGE_ADDRESS
+  ACCOUNTS_PAGE_ADDRESS,
+  ANALYTICS_PAGE_ADDRESS,
+  CURRENCIES_PAGE_ADDRESS, HOLDERS_PAGE_ADDRESS, KEEPERS_PAGE_ADDRESS,
+  TRANSACTIONS_PAGE_ADDRESS
 } from '../shared/consts';
 import {AppBarComponent, AppBarSectionComponent, AppBarSpacerComponent} from '@progress/kendo-angular-navigation';
 import {RouterLink, RouterLinkActive} from '@angular/router';
@@ -25,4 +25,6 @@ export class NavBarComponent {
   protected readonly ANALYTICS_PAGE_ADDRESS = ANALYTICS_PAGE_ADDRESS;
   protected readonly ACCOUNTS_PAGE_ADDRESS = ACCOUNTS_PAGE_ADDRESS;
   protected readonly CURRENCIES_PAGE_ADDRESS = CURRENCIES_PAGE_ADDRESS;
+  protected readonly HOLDERS_PAGE_ADDRESS = HOLDERS_PAGE_ADDRESS;
+  protected readonly KEEPERS_PAGE_ADDRESS = KEEPERS_PAGE_ADDRESS;
 }

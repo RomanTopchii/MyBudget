@@ -64,7 +64,7 @@ export class CurrencyDialogComponent
         this.formGroup.controls.active.patchValue(result.active);
         this.formGroup.controls.iso4217.patchValue(result.iso4217);
       },
-      error: (err) => {
+      error: _ => {
         this.dialog.close(true);
       }
     });
@@ -79,10 +79,10 @@ export class CurrencyDialogComponent
     };
 
     this.service.saveCurrency(command).subscribe({
-      next: (result) => {
+      next: _ => {
         this.dialog.close(true);
       },
-      error: (err) => {
+      error: _ => {
         this.dialog.close(false);
       }
     });

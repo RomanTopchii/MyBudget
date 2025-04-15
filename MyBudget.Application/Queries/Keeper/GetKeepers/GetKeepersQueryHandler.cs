@@ -11,6 +11,7 @@ public record GetKeepersQueryHandler(IKeeperRepository KeeperRepository)
     {
         return (await this.KeeperRepository.GetAllAsync())
             .Select(x => new KeeperSimpleDto(x))
+            .OrderBy(x => x.Name)
             .ToList();
     }
 }

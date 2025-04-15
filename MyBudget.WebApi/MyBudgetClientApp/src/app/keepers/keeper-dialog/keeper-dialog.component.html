@@ -1,0 +1,68 @@
+<kendo-dialog-titlebar (close)="closeClick()">
+  {{ title }}
+</kendo-dialog-titlebar>
+
+<div class="main" [formGroup]="formGroup">
+
+  <kendo-floatinglabel text="Name">
+    <kendo-textbox
+      formControlName="name"
+      required
+    ></kendo-textbox>
+  </kendo-floatinglabel>
+
+  <div>Type
+    <kendo-buttongroup selection="single">
+      <button
+        kendoButton
+        [toggleable]="true"
+        [selected] = "selectedKeeperType == KeeperType.Cash"
+        (click)="onTypeChangeClick(KeeperType.Cash)"
+      >Cash
+      </button>
+      <button
+        kendoButton
+        [toggleable]="true"
+        [selected] = "selectedKeeperType == KeeperType.Bank"
+        (click)="onTypeChangeClick(KeeperType.Bank)"
+      >Bank
+      </button>
+      <button
+        kendoButton
+        [toggleable]="true"
+        [selected] = "selectedKeeperType == KeeperType.Person"
+        (click)="onTypeChangeClick(KeeperType.Person)"
+      >Person
+      </button>
+    </kendo-buttongroup>
+  </div>
+
+  <div>
+    <input type="checkbox"
+           #active
+           formControlName="active"
+           kendoCheckBox
+    />
+    <kendo-label
+      class="k-checkbox-label"
+      [for]="active"
+      text="Active"
+    ></kendo-label>
+  </div>
+
+  <kendo-dialog-actions layout="end">
+    <button
+      kendoButton
+      (click)="onConfirmClick()"
+      themeColor="primary"
+    >{{ confirmButtonTitle }}
+    </button>
+
+    <button
+      kendoButton
+      (click)="closeClick()"
+    >Cancel
+    </button>
+
+  </kendo-dialog-actions>
+</div>

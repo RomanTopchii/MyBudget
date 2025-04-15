@@ -1,0 +1,56 @@
+<kendo-grid
+  [kendoGridBinding]="data"
+  [sortable]="true"
+  [resizable]="true"
+  [filterable]="true"
+  [selectable]="selectableSettings"
+  (selectionChange)="selectItem($event)"
+>
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoButton
+            themeColor="success"
+            fillMode="outline"
+            [svgIcon]="plusIcon"
+            (click)="onAddClick()"
+    >Add
+    </button>
+
+    <button kendoButton
+            themeColor="info"
+            fillMode="outline"
+            [disabled]="this.selectedKeeper == null"
+            [svgIcon]="pencilIcon"
+            (click)="onEditClick()"
+    >Edit
+    </button>
+
+    <button kendoButton
+            themeColor="error"
+            fillMode="outline"
+            [disabled]="this.selectedKeeper == null"
+            [svgIcon]="trashIcon"
+            (click)="onDeleteClick()"
+    >Delete
+    </button>
+  </ng-template>
+  <kendo-grid-column field="name" title="Name"></kendo-grid-column>
+  <kendo-grid-column title="Type">
+    <ng-template
+      kendoGridCellTemplate
+      let-column
+    >
+      @switch (column.type) {
+        @case (KeeperType.Cash) {
+          <div>Cash</div>
+        }
+        @case (KeeperType.Bank) {
+          <div>Bank</div>
+        }
+        @case (KeeperType.Person) {
+          <div>Person</div>
+        }
+      }
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="active" title="Active" filter="boolean"></kendo-grid-column>
+</kendo-grid>

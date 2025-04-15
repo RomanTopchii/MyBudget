@@ -11,6 +11,7 @@ public record GetHoldersQueryHandler(IHolderRepository HolderRepository)
     {
         return (await this.HolderRepository.GetAllAsync())
             .Select(x => new HolderSimpleDto(x))
+            .OrderBy(x => x.Name)
             .ToList();
     }
 }
