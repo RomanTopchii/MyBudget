@@ -8,12 +8,12 @@ using MyBudget.Domain.Exceptions.Generic;
 namespace MyBudget.Application.Commands.Account.SaveAccount;
 
 public record SaveAccountHandler(
-        IAccountRepository AccountRepository,
-        IRepository<Domain.AccountType> AccountTypeRepository,
-        ICurrencyRepository CurrencyRepository,
-        IHolderRepository HolderRepository,
-        IKeeperRepository KeeperRepository,
-        IUnitOfWork UnitOfWork)
+    IAccountRepository AccountRepository,
+    IRepository<Domain.AccountType> AccountTypeRepository,
+    ICurrencyRepository CurrencyRepository,
+    IHolderRepository HolderRepository,
+    IKeeperRepository KeeperRepository,
+    IUnitOfWork UnitOfWork)
     : IRequestHandler<SaveAccount>
 {
     public async Task Handle(SaveAccount request, CancellationToken cancellationToken)
@@ -96,7 +96,8 @@ public record SaveAccountHandler(
         {
             throw new DynamicAccountException($"Account should not has {typeof(T).Name.ToLower()}");
         }
-        else if (hasValue)
+
+        if (hasValue)
         {
             if (requestPropertyId != null)
             {
@@ -104,19 +105,13 @@ public record SaveAccountHandler(
                 {
                     throw new ObjectNotFoundException<T>((Guid)requestPropertyId);
                 }
-                else
-                {
-                    return propertyValue;
-                }
+
+                return propertyValue;
             }
-            else
-            {
-                throw new DynamicAccountException($"Account should has {typeof(T).Name.ToLower()}");
-            }
+
+            throw new DynamicAccountException($"Account should has {typeof(T).Name.ToLower()}");
         }
-        else
-        {
-            return default;
-        }
+
+        return default;
     }
 }
