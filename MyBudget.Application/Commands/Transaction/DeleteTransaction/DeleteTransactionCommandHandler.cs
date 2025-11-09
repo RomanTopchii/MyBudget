@@ -8,13 +8,13 @@ using MyBudget.Domain.Exceptions.Generic;
 
 namespace MyBudget.Application.Commands.Transaction.DeleteTransaction;
 
-public record DeleteTransactionCommandHandler(
+public record DeleteTransactionHandler(
         ITransactionRepository TransactionRepository,
         IRepository<TransactionItem> TransactionItemRepository,
         IUnitOfWork UnitOfWork)
-    : IRequestHandler<DeleteTransactionCommand>
+    : IRequestHandler<DeleteTransaction>
 {
-    public async Task Handle(DeleteTransactionCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteTransaction request, CancellationToken cancellationToken)
     {
         var transaction = await this.TransactionRepository.GetByIdAsync(request.Id) ??
                           throw new ObjectNotFoundException<Domain.Transaction>(request.Id);

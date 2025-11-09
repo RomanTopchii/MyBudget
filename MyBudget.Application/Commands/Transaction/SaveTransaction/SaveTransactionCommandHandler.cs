@@ -6,12 +6,12 @@ using MyBudget.Domain.Enums;
 
 namespace MyBudget.Application.Commands.Transaction.SaveTransaction;
 
-public record SaveTransactionCommandHandler(
+public record SaveTransactionHandler(
     ITransactionRepository TransactionRepository,
     IRepository<TransactionItem> TransactionItemRepository,
-    IUnitOfWork UnitOfWork) : IRequestHandler<SaveTransactionCommand>
+    IUnitOfWork UnitOfWork) : IRequestHandler<SaveTransaction>
 {
-    public async Task Handle(SaveTransactionCommand request, CancellationToken cancellationToken)
+    public async Task Handle(SaveTransaction request, CancellationToken cancellationToken)
     {
         Domain.Transaction? transaction = null;
         if (request.Id != null)

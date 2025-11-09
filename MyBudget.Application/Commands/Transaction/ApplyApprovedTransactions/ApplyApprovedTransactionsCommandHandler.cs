@@ -5,12 +5,12 @@ using MyBudget.Domain.Enums;
 
 namespace MyBudget.Application.Commands.Transaction.ApplyApprovedTransactions;
 
-public record ApplyApprovedTransactionsCommandHandler(
+public record ApplyApprovedTransactionsHandler(
     ITransactionRepository TransactionRepository,
     IUnitOfWork UnitOfWork) 
-    : IRequestHandler<ApplyApprovedTransactionsCommand>
+    : IRequestHandler<ApplyApprovedTransactions>
 {
-    public async Task Handle(ApplyApprovedTransactionsCommand request, CancellationToken cancellationToken)
+    public async Task Handle(ApplyApprovedTransactions request, CancellationToken cancellationToken)
     {
         var approvedTransactions = this.TransactionRepository.Query()
             .Where(x => x.Status == TransactionStatus.Approved);

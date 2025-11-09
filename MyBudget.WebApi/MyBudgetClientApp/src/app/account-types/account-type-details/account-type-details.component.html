@@ -1,0 +1,32 @@
+<div class="main">
+  <kendo-buttongroup selection="single">
+    @for (option of pickOptions; track option) {
+      <button
+        kendoButton
+        [toggleable]="true"
+        [selected]="option == selectedOption"
+        (selectedChange)="this.selectedOption = option"
+      >{{ option }}
+      </button>
+    }
+  </kendo-buttongroup>
+
+  @switch (selectedOption) {
+    @case (PickOption.Details) {
+      <app-details [data]="this.getDetailsBasedOnOption"></app-details>
+    }
+    @case (PickOption.Children) {
+      <kendo-grid [data]="selectedAccountType!.children" [navigable]="false" [scrollable]="'none'">
+        <kendo-grid-column field="name" title=""></kendo-grid-column>
+      </kendo-grid>
+    }
+    @case (PickOption.Ancestors) {
+      <kendo-grid [data]="selectedAccountType!.ancestors" [navigable]="false" [scrollable]="'none'">
+        <kendo-grid-column field="name" title=""></kendo-grid-column>
+      </kendo-grid>
+    }
+    @case (PickOption.Info) {
+      <app-details [data]="this.getDetailsBasedOnOption" [firstColumnWidth]="150"></app-details>
+    }
+  }
+</div>

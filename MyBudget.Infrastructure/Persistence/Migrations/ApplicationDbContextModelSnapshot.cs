@@ -18,7 +18,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .UseCollation("Cyrillic_General_CI_AS")
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -163,13 +163,13 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("hasKeeper");
 
-                    b.Property<bool>("HasLinkedAccount")
-                        .HasColumnType("bit")
-                        .HasColumnName("hasLinkedAccount");
-
                     b.Property<short>("KeeperGroup")
                         .HasColumnType("smallint")
                         .HasColumnName("keeperGroup");
+
+                    b.Property<Guid?>("LinkedAccountTypeId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("linkedAccountTypeId");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(255)")
@@ -189,6 +189,8 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("priority");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LinkedAccountTypeId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -562,14 +564,6 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("hasKeeper_MOD");
 
-                    b.Property<bool?>("HasLinkedAccount")
-                        .HasColumnType("bit")
-                        .HasColumnName("hasLinkedAccount");
-
-                    b.Property<bool?>("HasLinkedAccount_MOD")
-                        .HasColumnType("bit")
-                        .HasColumnName("hasLinkedAccount_MOD");
-
                     b.Property<short?>("KeeperGroup")
                         .HasColumnType("smallint")
                         .HasColumnName("keeperGroup");
@@ -577,6 +571,14 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.Property<bool?>("KeeperGroup_MOD")
                         .HasColumnType("bit")
                         .HasColumnName("keeperGroup_MOD");
+
+                    b.Property<Guid?>("LinkedAccountTypeId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("linkedAccountTypeId");
+
+                    b.Property<bool?>("LinkedAccountTypeId_MOD")
+                        .HasColumnType("bit")
+                        .HasColumnName("linkedAccountTypeId_MOD");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(255)")
@@ -1346,6 +1348,15 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.Navigation("Parent");
 
                     b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("MyBudget.Domain.AccountType", b =>
+                {
+                    b.HasOne("MyBudget.Domain.AccountType", "LinkedAccountType")
+                        .WithMany()
+                        .HasForeignKey("LinkedAccountTypeId");
+
+                    b.Navigation("LinkedAccountType");
                 });
 
             modelBuilder.Entity("MyBudget.Domain.AccountTypeAccountTypeLink", b =>

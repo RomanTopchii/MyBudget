@@ -16,8 +16,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
 
-          console.error('Interceptor caught an error:', error); // Add this
-
           let message = 'An unexpected error occurred.';
 
           if (error.error instanceof ErrorEvent) {

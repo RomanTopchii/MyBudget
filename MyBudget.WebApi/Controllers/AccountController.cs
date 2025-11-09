@@ -9,6 +9,6 @@ namespace MyBudget.WebApi.Controllers;
 public class AccountController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public Task SaveAccount(SaveAccountCommand model) 
-        => mediator.Send(model, default);
+    public Task SaveAccount(SaveAccount model, CancellationToken cancellationToken) 
+        => mediator.Send(model, cancellationToken);
 }

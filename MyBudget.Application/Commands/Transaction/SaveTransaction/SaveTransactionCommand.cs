@@ -4,7 +4,7 @@ using MyBudget.Domain.Enums;
 
 namespace MyBudget.Application.Commands.Transaction.SaveTransaction;
 
-public record SaveTransactionCommand(Guid? Id,
+public record SaveTransaction(Guid? Id,
     DateTime Date,
     TransactionStatus Status,
     TransactionType Type,

@@ -32,10 +32,9 @@ public class AccountTypeConfiguration : IEntityTypeConfiguration<AccountType>
             .HasColumnType(SqlDataTypes.Bit)
             .IsRequired();
 
-        builder.Property(x => x.HasLinkedAccount)
-            .HasColumnName("hasLinkedAccount")
-            .HasColumnType(SqlDataTypes.Bit)
-            .IsRequired();
+        builder.Property(x => x.LinkedAccountTypeId)
+            .HasColumnName("linkedAccountTypeId")
+            .HasColumnType(SqlDataTypes.Uniqueidentifier);
 
         builder.Property(x => x.HasInitialBalance)
             .HasColumnName("hasInitialBalance")

@@ -2,4 +2,4 @@ using MediatR;
 
 namespace MyBudget.Application.Commands.Transaction.ApplyApprovedTransactions;
 
-public record ApplyApprovedTransactionsCommand(): IRequest;
+public record ApplyApprovedTransactions(): IRequest;

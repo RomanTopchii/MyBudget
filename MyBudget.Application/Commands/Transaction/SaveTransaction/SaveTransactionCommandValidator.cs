@@ -2,7 +2,7 @@ using FluentValidation;
 
 namespace MyBudget.Application.Commands.Transaction.SaveTransaction;
 
-public class SaveTransactionCommandValidator : AbstractValidator<SaveTransactionCommand>
+public class SaveTransactionCommandValidator : AbstractValidator<SaveTransaction>
 {
     public SaveTransactionCommandValidator()
     {

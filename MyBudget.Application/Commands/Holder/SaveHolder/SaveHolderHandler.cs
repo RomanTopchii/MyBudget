@@ -1,0 +1,39 @@
+using MediatR;
+using MyBudget.Application.Interfaces.Persistence;
+using MyBudget.Application.Interfaces.Persistence.Repositories;
+using MyBudget.Domain.Core;
+using MyBudget.Domain.Exceptions;
+using MyBudget.Domain.Exceptions.Generic;
+
+namespace MyBudget.Application.Commands.Holder.SaveHolder;
+
+public record SaveHolderHandler(
+    IHolderRepository HolderRepository,
+    IUnitOfWork UnitOfWork) : IRequestHandler<SaveHolder>
+{
+    public async Task Handle(SaveHolder request, CancellationToken cancellationToken)
+    {
+        if (await this.HolderRepository.AnyAsync(x => x.Name == request.Name && x.Id != request.Id))
+        {
+            throw new ObjectWithSameNameAlreadyExistsException<Domain.Holder>(new DictionaryEntity
+                { Name = request.Name });
+        }
+
+        Domain.Holder? holder = null;
+        if (request.Id != null)
+        {
+            holder = await this.HolderRepository.GetByIdAsync((Guid)request.Id);
+        }
+
+        if (holder == null)
+        {
+            holder = new Domain.Holder();
+            await this.HolderRepository.AddAsync(holder);
+        }
+
+        holder.Id = request.Id ?? Guid.NewGuid();
+        holder.Active = request.Active;
+        holder.Name = request.Name;
+        this.UnitOfWork.Complete();
+    }
+}

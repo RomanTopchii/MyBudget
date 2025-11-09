@@ -2,6 +2,7 @@ namespace MyBudget.Domain.Enums;
 
 public enum Classification
 {
-    Assets = 0,
-    Liabilities = 1
+    None = 0,
+    Assets = 1,
+    Liabilities = 2
 }

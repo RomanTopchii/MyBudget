@@ -10,3 +10,4 @@ export const HOLDERS_PAGE_ADDRESS = 'holders'
 
 export const KEEPERS_PAGE_ADDRESS = 'keepers'
 
+export const ACCOUNT_TYPES_PAGE_ADDRESS = "account-types"

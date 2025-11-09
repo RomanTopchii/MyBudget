@@ -4,14 +4,12 @@ import {Guid} from '../common/Guid';
 //ENUMS
 //---------------------------------------------------------------
 
-export enum Classification
-{
+export enum Classification {
   Assets = 0,
   Liabilities = 1
 }
 
-export enum KeeperGroup
-{
+export enum KeeperGroup {
   None = 0,
   Cash = 1,
   Bank = 2,
@@ -19,15 +17,13 @@ export enum KeeperGroup
   Any = 4
 }
 
-export enum KeeperType
-{
+export enum KeeperType {
   Cash = 0,
   Bank = 1,
   Person = 2
 }
 
-export enum TransactionItemType
-{
+export enum TransactionItemType {
   Debit = 0,
   Credit = 1
 }
@@ -56,6 +52,7 @@ export interface SaveAccountTypeCommand {
   hasCurrency: boolean;
   hasHolder: boolean;
   hasKeeper: boolean;
+  linkedAccountTypeId: Guid | null
   hasInitialBalance: boolean;
   calculateFullTimeBalance: boolean;
   canBeDeleted: boolean;
@@ -66,7 +63,16 @@ export interface SaveAccountTypeCommand {
   allowsTransactions: boolean;
   keeperGroup: KeeperGroup;
   priority: number;
-  parentTypes: Guid[];
+}
+
+export interface AddAccountTypeLinkCommand {
+  childId: Guid;
+  ancestorId: Guid;
+}
+
+export interface DeleteAccountTypeLinkCommand {
+  childId: Guid;
+  ancestorId: Guid;
 }
 
 export interface SaveCurrencyCommand {

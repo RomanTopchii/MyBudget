@@ -53,12 +53,12 @@ public class AccountTypeAuditConfiguration : IEntityTypeConfiguration<AccountTyp
             .HasColumnName("hasKeeper_MOD")
             .HasColumnType(SqlDataTypes.Bit);
 
-        builder.Property(x => x.HasLinkedAccount)
-            .HasColumnName("hasLinkedAccount")
-            .HasColumnType(SqlDataTypes.Bit);
+        builder.Property(x => x.LinkedAccountTypeId)
+            .HasColumnName("linkedAccountTypeId")
+            .HasColumnType(SqlDataTypes.Uniqueidentifier);
 
-        builder.Property(x => x.HasLinkedAccount_MOD)
-            .HasColumnName("hasLinkedAccount_MOD")
+        builder.Property(x => x.LinkedAccountTypeId_MOD)
+            .HasColumnName("linkedAccountTypeId_MOD")
             .HasColumnType(SqlDataTypes.Bit);
 
         builder.Property(x => x.HasInitialBalance)

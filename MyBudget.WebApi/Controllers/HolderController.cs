@@ -14,17 +14,17 @@ public class HolderController (IMediator mediator): ControllerBase
 {
     [HttpDelete]
     public Task DeleteHolder(Guid id, CancellationToken cancellationToken) =>
-        mediator.Send(new DeleteHolderCommand(Id: id), cancellationToken);
+        mediator.Send(new DeleteHolder(Id: id), cancellationToken);
     
     [HttpPost]
-    public Task SaveHolder(SaveHolderCommand model, CancellationToken cancellationToken) =>
+    public Task SaveHolder(SaveHolder model, CancellationToken cancellationToken) =>
         mediator.Send(model, cancellationToken);
     
     [HttpGet]
     public Task<List<HolderSimpleDto>> GetHolders(CancellationToken cancellationToken) =>
-        mediator.Send(new GetHoldersQuery(), cancellationToken);
+        mediator.Send(new GetHolders(), cancellationToken);
 
     [HttpGet("{id}")]
     public Task<HolderSimpleDto> GetHolderById([FromRoute] Guid id, CancellationToken cancellationToken) =>
-        mediator.Send(new GetHolderByIdQuery(id), cancellationToken);
+        mediator.Send(new GetHolderById(id), cancellationToken);
 }

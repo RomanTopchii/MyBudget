@@ -7,6 +7,6 @@ public record ApplyApprovedTransactionsJob(IMediator Mediator)
 {
     public async Task ExecuteAsync()
     {
-        await this.Mediator.Send(new ApplyApprovedTransactionsCommand(), default);
+        await this.Mediator.Send(new ApplyApprovedTransactions(), default);
     }
 }

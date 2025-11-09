@@ -14,11 +14,11 @@ public class TransactionController(IMediator mediator) : ControllerBase
     [HttpDelete]
     public Task DeleteTransaction(Guid id, CancellationToken cancellationToken)
     {
-        return mediator.Send(new DeleteTransactionCommand(id), cancellationToken);
+        return mediator.Send(new DeleteTransaction(id), cancellationToken);
     }
 
     [HttpPost]
-    public Task SaveTransaction(SaveTransactionCommand model, CancellationToken cancellationToken)
+    public Task SaveTransaction(SaveTransaction model, CancellationToken cancellationToken)
     {
         return mediator.Send(model, cancellationToken);
     }
@@ -26,6 +26,6 @@ public class TransactionController(IMediator mediator) : ControllerBase
     [HttpGet]
     public Task<List<TransactionDto>> GetTransactions(CancellationToken cancellationToken)
     {
-        return mediator.Send(new GetTransactionsQuery(), cancellationToken);
+        return mediator.Send(new GetTransactions(), cancellationToken);
     }
 }

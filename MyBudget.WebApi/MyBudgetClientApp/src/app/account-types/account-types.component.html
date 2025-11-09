@@ -1,0 +1,12 @@
+<div class="main">
+  <kendo-grid
+    [data]="accountTypes"
+    [selectable]="{ mode: 'single' }"
+    (selectionChange)="onSelectionChange($event)"
+    [height]="500"
+  >
+    <kendo-grid-column field="name" title="Name"></kendo-grid-column>
+  </kendo-grid>
+
+  <app-account-type-details [selectedAccountType]="selectedAccountType"></app-account-type-details>
+</div>

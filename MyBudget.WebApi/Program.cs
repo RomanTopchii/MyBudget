@@ -14,19 +14,19 @@ builder.Services.RegisterHangfireServices(builder.Configuration);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Host.UseSerilog((_, _, configuration) =>
-{
-    var sinkOptions = new MSSqlServerSinkOptions
-    {
-        AutoCreateSqlDatabase = true,
-        AutoCreateSqlTable = true,
-        TableName = "Log"
-    };
-
-    configuration
-        .MinimumLevel.Error()
-        .WriteTo.MSSqlServer(connectionString, sinkOptions);
-});
+// builder.Host.UseSerilog((_, _, configuration) =>
+// {
+//     var sinkOptions = new MSSqlServerSinkOptions
+//     {
+//         AutoCreateSqlDatabase = true,
+//         AutoCreateSqlTable = true,
+//         TableName = "Log"
+//     };
+//
+//     configuration
+//         .MinimumLevel.Error()
+//         .WriteTo.MSSqlServer(connectionString, sinkOptions);
+// });
 
 var app = builder.Build();
 

@@ -15,21 +15,21 @@ public class CurrencyController (IMediator mediator): ControllerBase
 {
     [HttpDelete]
     public Task DeleteCurrency([FromQuery] Guid id, CancellationToken cancellationToken) =>
-        mediator.Send(new DeleteCurrencyCommand(Id: id), cancellationToken);
+        mediator.Send(new DeleteCurrency(Id: id), cancellationToken);
     
     [HttpPost("save")]
-    public Task SaveCurrency([FromBody] SaveCurrencyCommand model, CancellationToken cancellationToken) =>
+    public Task SaveCurrency([FromBody] SaveCurrency model, CancellationToken cancellationToken) =>
         mediator.Send(model, cancellationToken);
     
     [HttpPost("set-accounting")]
-    public Task SetAccountingCurrency([FromBody] SetAccountingCurrencyCommand model, CancellationToken cancellationToken) =>
+    public Task SetAccountingCurrency([FromBody] SetAccountingCurrency model, CancellationToken cancellationToken) =>
         mediator.Send(model, cancellationToken);
     
     [HttpGet]
     public Task<List<CurrencySimpleDto>> GetCurrencies(CancellationToken cancellationToken) =>
-        mediator.Send(new GetCurrenciesQuery(), cancellationToken);
+        mediator.Send(new GetCurrencies(), cancellationToken);
 
     [HttpGet("{id}")]
     public Task<CurrencySimpleDto> GetCurrencyById([FromRoute] Guid id, CancellationToken cancellationToken) =>
-        mediator.Send(new GetCurrencyByIdQuery(id), cancellationToken);
+        mediator.Send(new GetCurrencyById(id), cancellationToken);
 }

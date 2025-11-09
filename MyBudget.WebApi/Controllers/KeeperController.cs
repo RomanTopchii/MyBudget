@@ -14,17 +14,17 @@ public class KeeperController(IMediator mediator) : ControllerBase
 {
     [HttpDelete]
     public Task DeleteKeeper(Guid id, CancellationToken cancellationToken) =>
-        mediator.Send(new DeleteKeeperCommand(Id: id), cancellationToken);
+        mediator.Send(new DeleteKeeper(Id: id), cancellationToken);
 
     [HttpPost]
-    public Task SaveKeeper(SaveKeeperCommand model, CancellationToken cancellationToken) =>
+    public Task SaveKeeper(SaveKeeper model, CancellationToken cancellationToken) =>
         mediator.Send(model, cancellationToken);
 
     [HttpGet]
     public Task<List<KeeperSimpleDto>> GetKeepers(CancellationToken cancellationToken) =>
-        mediator.Send(new GetKeepersQuery(), cancellationToken);
+        mediator.Send(new GetKeepers(), cancellationToken);
 
     [HttpGet("{id}")]
     public Task<KeeperSimpleDto> GetKeeperById([FromRoute] Guid id, CancellationToken cancellationToken) =>
-        mediator.Send(new GetKeeperByIdQuery(id), cancellationToken);
+        mediator.Send(new GetKeeperById(id), cancellationToken);
 }

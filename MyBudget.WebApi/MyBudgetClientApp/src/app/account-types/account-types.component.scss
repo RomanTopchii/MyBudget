@@ -1,0 +1,15 @@
+.main {
+  display: flex;
+  gap: 20px;
+  height: auto;
+
+  kendo-grid {
+    flex: 1;
+    height: 92vh !important;
+    width: 70%;
+  }
+
+  app-account-type-details {
+    width: 30%;
+  }
+}

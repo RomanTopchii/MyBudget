@@ -16,6 +16,7 @@ public static class Startup
             .AddTransient<IUnitOfWork, UnitOfWork>()
             .AddTransient(typeof(IRepository<>), typeof(Repository<>))
             .AddTransient<IAccountRepository, AccountRepository>()
+            .AddTransient<IAccountTypeRepository, AccountTypeRepository>()
             .AddTransient<ICurrencyRepository, CurrencyRepository>()
             .AddTransient<IHolderRepository, HolderRepository>()
             .AddTransient<IKeeperRepository, KeeperRepository>()

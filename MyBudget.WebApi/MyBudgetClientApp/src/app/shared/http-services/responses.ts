@@ -1,5 +1,5 @@
 import {Guid} from '../common/Guid';
-import {KeeperType, TransactionItemType} from './requests';
+import {Classification, KeeperGroup, KeeperType, TransactionItemType} from './requests';
 
 //---------------------------------------------------------------
 //Core
@@ -7,6 +7,10 @@ import {KeeperType, TransactionItemType} from './requests';
 
 export interface BaseEntityDto extends IdentifiableDto {
   active: boolean;
+  createDate?: Date;
+  createdBy?: string;
+  modifyDate?: Date;
+  modifiedBy?: string;
 }
 
 export interface DictionaryEntityDto extends BaseEntityDto {
@@ -21,7 +25,32 @@ export interface IdentifiableDto {
 //Custom
 //---------------------------------------------------------------
 
-export interface AccountSimpleDto extends DictionaryEntityDto {}
+export interface AccountSimpleDto extends DictionaryEntityDto {
+}
+
+export interface AccountTypeNamedDto extends DictionaryEntityDto {
+}
+
+
+export interface AccountTypeRichDto extends DictionaryEntityDto {
+  classification?: Classification;
+  hasCurrency: boolean;
+  hasHolder: boolean;
+  hasKeeper: boolean;
+  linkedAccountType?: AccountTypeNamedDto;
+  hasInitialBalance: boolean;
+  calcFullTimeBalance: boolean;
+  canBeDeleted: boolean;
+  canChangeActiveStatus: boolean;
+  canBeRenamed: boolean;
+  canBeCreatedByUser: boolean;
+  checkAmountBeforeDeactivate: boolean;
+  allowsTransactions: boolean;
+  keeperGroup: KeeperGroup;
+  priority: number;
+  children: AccountTypeNamedDto[];
+  ancestors: AccountTypeNamedDto[];
+}
 
 export interface CurrencySimpleDto extends BaseEntityDto {
   code: string;
@@ -29,7 +58,8 @@ export interface CurrencySimpleDto extends BaseEntityDto {
   isAccounting: boolean;
 }
 
-export interface HolderSimpleDto extends DictionaryEntityDto {}
+export interface HolderSimpleDto extends DictionaryEntityDto {
+}
 
 export interface KeeperSimpleDto extends DictionaryEntityDto {
   type: KeeperType;
