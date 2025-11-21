@@ -2,7 +2,7 @@ import {BaseHttpService} from './base-http.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {SaveKeeperCommand} from './requests';
+import {SaveKeeper} from './requests';
 import {Guid} from '../common/Guid';
 import {KeeperSimpleDto} from './responses';
 
@@ -12,7 +12,7 @@ export class KeeperService extends BaseHttpService {
     super('keepers', http);
   }
 
-  public saveKeeper(command: SaveKeeperCommand): Observable<void> {
+  public saveKeeper(command: SaveKeeper): Observable<void> {
     return this.post<void>(undefined, command);
   }
 

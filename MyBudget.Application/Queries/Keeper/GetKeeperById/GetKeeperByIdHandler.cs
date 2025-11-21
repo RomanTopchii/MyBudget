@@ -10,9 +10,9 @@ public record GetKeeperByIdHandler(IKeeperRepository KeeperRepository)
 {
     public async Task<KeeperSimpleDto> Handle(GetKeeperById request, CancellationToken cancellationToken)
     {
-        var currency = await this.KeeperRepository.GetByIdAsync(request.Id)
+        var keeper = await this.KeeperRepository.GetByIdAsync(request.Id)
                        ?? throw new ObjectNotFoundException<Domain.Keeper>(request.Id);
 
-        return new KeeperSimpleDto(currency);
+        return new KeeperSimpleDto(keeper);
     }
 }

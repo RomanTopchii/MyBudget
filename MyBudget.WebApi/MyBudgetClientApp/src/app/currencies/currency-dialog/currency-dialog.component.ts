@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {CurrencySimpleDto} from '../../shared/http-services/responses';
 import {Guid} from '../../shared/common/Guid';
 import {DialogContentBase, DialogRef, DialogsModule} from '@progress/kendo-angular-dialog';
-import {SaveCurrencyCommand} from '../../shared/http-services/requests';
+import {SaveCurrency} from '../../shared/http-services/requests';
 import {FloatingLabelComponent, LabelComponent} from '@progress/kendo-angular-label';
 import {CheckBoxDirective, TextBoxComponent} from '@progress/kendo-angular-inputs';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -71,7 +71,7 @@ export class CurrencyDialogComponent
   }
 
   protected onConfirmClick() {
-    const command: SaveCurrencyCommand = {
+    const command: SaveCurrency = {
       id: this.currencyId,
       active: this.formGroup.controls.active.value as boolean,
       code: this.formGroup.controls.code.value as string,

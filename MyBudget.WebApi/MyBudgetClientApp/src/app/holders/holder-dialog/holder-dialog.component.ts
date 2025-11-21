@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {HolderSimpleDto} from '../../shared/http-services/responses';
 import {Guid} from '../../shared/common/Guid';
 import {DialogContentBase, DialogRef, DialogsModule} from '@progress/kendo-angular-dialog';
-import {SaveHolderCommand} from '../../shared/http-services/requests';
+import {SaveHolder} from '../../shared/http-services/requests';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonModule} from '@progress/kendo-angular-buttons';
 import {HolderService} from '../../shared/http-services/holder.service';
@@ -67,7 +67,7 @@ export class HolderDialogComponent
   }
 
   protected onConfirmClick() {
-    const command: SaveHolderCommand = {
+    const command: SaveHolder = {
       id: this.holderId,
       active: this.formGroup.controls.active.value as boolean,
       name: this.formGroup.controls.name.value as string,

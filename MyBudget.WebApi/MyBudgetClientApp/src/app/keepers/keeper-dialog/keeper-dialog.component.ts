@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {KeeperSimpleDto} from '../../shared/http-services/responses';
 import {Guid} from '../../shared/common/Guid';
 import {DialogContentBase, DialogRef, DialogsModule} from '@progress/kendo-angular-dialog';
-import {KeeperType, SaveKeeperCommand} from '../../shared/http-services/requests';
+import {KeeperType, SaveKeeper} from '../../shared/http-services/requests';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ButtonGroupComponent, ButtonModule} from '@progress/kendo-angular-buttons';
 import {FloatingLabelComponent, LabelComponent} from '@progress/kendo-angular-label';
@@ -75,7 +75,7 @@ export class KeeperDialogComponent
   }
 
   protected onConfirmClick() {
-    const command: SaveKeeperCommand = {
+    const command: SaveKeeper = {
       id: this.keeperId,
       active: this.formGroup.controls.active.value as boolean,
       name: this.formGroup.controls.name.value as string,

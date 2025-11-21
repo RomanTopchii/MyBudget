@@ -2,7 +2,7 @@ import {BaseHttpService} from './base-http.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {SaveCurrencyCommand, SetAccountingCurrencyCommand} from './requests';
+import {SaveCurrency, SetAccountingCurrency} from './requests';
 import {Guid} from '../common/Guid';
 import {CurrencySimpleDto} from './responses';
 
@@ -12,11 +12,11 @@ export class CurrencyService extends BaseHttpService {
     super('currencies', http);
   }
 
-  public saveCurrency(command: SaveCurrencyCommand): Observable<void> {
+  public saveCurrency(command: SaveCurrency): Observable<void> {
     return this.post<void>('save', command);
   }
 
-  public setAccountingCurrency(command: SetAccountingCurrencyCommand): Observable<void> {
+  public setAccountingCurrency(command: SetAccountingCurrency): Observable<void> {
     return this.post<void>('set-accounting', command);
   }
 

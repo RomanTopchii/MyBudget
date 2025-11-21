@@ -2,7 +2,7 @@ import {BaseHttpService} from './base-http.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {SaveHolderCommand} from './requests';
+import {SaveHolder} from './requests';
 import {Guid} from '../common/Guid';
 import {HolderSimpleDto} from './responses';
 
@@ -12,7 +12,7 @@ export class HolderService extends BaseHttpService {
     super('holders', http);
   }
 
-  public saveHolder(command: SaveHolderCommand): Observable<void> {
+  public saveHolder(command: SaveHolder): Observable<void> {
     return this.post<void>(undefined, command);
   }
 

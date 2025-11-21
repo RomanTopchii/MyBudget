@@ -2,7 +2,7 @@ import {BaseHttpService} from './base-http.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {AddAccountTypeLinkCommand, DeleteAccountTypeLinkCommand, SaveAccountTypeCommand} from './requests';
+import {AddAccountTypeLink, DeleteAccountTypeLink, SaveAccountType} from './requests';
 import {Guid} from '../common/Guid';
 import {AccountTypeRichDto} from './responses';
 
@@ -12,15 +12,15 @@ export class AccountTypeService extends BaseHttpService {
     super('account-types', http);
   }
 
-  public saveAccountType(command: SaveAccountTypeCommand): Observable<void> {
+  public saveAccountType(command: SaveAccountType): Observable<void> {
     return this.post<void>(undefined, command);
   }
 
-  public addAccountTypeLink(command: AddAccountTypeLinkCommand): Observable<void> {
+  public addAccountTypeLink(command: AddAccountTypeLink): Observable<void> {
     return this.post<void>('add-link', command);
   }
 
-  public deleteAccountTypeLink(command: DeleteAccountTypeLinkCommand): Observable<void> {
+  public deleteAccountTypeLink(command: DeleteAccountTypeLink): Observable<void> {
     return this.post<void>('delete-link', command);
   }
 

@@ -25,6 +25,16 @@ export interface IdentifiableDto {
 //Custom
 //---------------------------------------------------------------
 
+export interface AccountRichDto extends DictionaryEntityDto {
+  parent: AccountSimpleDto | null;
+  type: AccountTypeNamedDto;
+  currency: CurrencySimpleDto | null;
+  holder: HolderSimpleDto | null;
+  keeper: KeeperSimpleDto | null;
+  linkedAccount: AccountSimpleDto | null;
+  children: AccountSimpleDto[];
+}
+
 export interface AccountSimpleDto extends DictionaryEntityDto {
 }
 
@@ -37,7 +47,7 @@ export interface AccountTypeRichDto extends DictionaryEntityDto {
   hasCurrency: boolean;
   hasHolder: boolean;
   hasKeeper: boolean;
-  linkedAccountType?: AccountTypeNamedDto;
+  linkedAccountType: AccountTypeNamedDto | null;
   hasInitialBalance: boolean;
   calcFullTimeBalance: boolean;
   canBeDeleted: boolean;

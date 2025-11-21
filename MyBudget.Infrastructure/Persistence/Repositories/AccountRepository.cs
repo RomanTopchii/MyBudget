@@ -12,8 +12,20 @@ public class AccountRepository
         : base(context)
     {
     }
+    
+    public IQueryable<Account> QueryRich()
+    {
+        return dbSet
+            .Include(x => x.Currency)
+            .Include(x => x.Keeper)
+            .Include(x => x.Holder)
+            .Include(x => x.LinkedAccount)
+            .Include(x => x.Parent)
+            .Include(x => x.Children)
+            .ThenInclude(x => x.Children);
+    }
 
-    public new async Task<Account?> GetByIdAsync(Guid id)
+    public async Task<Account?> GetRichByIdAsync(Guid id)
     {
         return await dbSet
             .Include(x => x.Currency)

@@ -32,7 +32,7 @@ export enum TransactionItemType {
 //COMMANDS
 //---------------------------------------------------------------
 
-export interface SaveAccountCommand {
+export interface SaveAccount {
   id: Guid | null;
   active: boolean;
   name: string;
@@ -44,7 +44,7 @@ export interface SaveAccountCommand {
   linkedAccountId: Guid | null;
 }
 
-export interface SaveAccountTypeCommand {
+export interface SaveAccountType {
   id: Guid | null;
   active: boolean;
   name: string;
@@ -65,34 +65,34 @@ export interface SaveAccountTypeCommand {
   priority: number;
 }
 
-export interface AddAccountTypeLinkCommand {
+export interface AddAccountTypeLink {
   childId: Guid;
   ancestorId: Guid;
 }
 
-export interface DeleteAccountTypeLinkCommand {
+export interface DeleteAccountTypeLink {
   childId: Guid;
   ancestorId: Guid;
 }
 
-export interface SaveCurrencyCommand {
+export interface SaveCurrency {
   id: Guid | null;
   active: boolean;
   code: string;
   iso4217: number;
 }
 
-export interface SetAccountingCurrencyCommand {
+export interface SetAccountingCurrency {
   newAccountingCurrencyId: Guid;
 }
 
-export interface SaveHolderCommand {
+export interface SaveHolder {
   id: Guid | null;
   active: boolean;
   name: string;
 }
 
-export interface SaveKeeperCommand {
+export interface SaveKeeper {
   id: Guid | null;
   active: boolean;
   name: string;

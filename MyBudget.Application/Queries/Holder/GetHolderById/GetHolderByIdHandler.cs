@@ -10,9 +10,9 @@ public record GetHolderByIdHandler(IHolderRepository HolderRepository)
 {
     public async Task<HolderSimpleDto> Handle(GetHolderById request, CancellationToken cancellationToken)
     {
-        var currency = await this.HolderRepository.GetByIdAsync(request.Id)
+        var holder = await this.HolderRepository.GetByIdAsync(request.Id)
                        ?? throw new ObjectNotFoundException<Domain.Holder>(request.Id);
 
-        return new HolderSimpleDto(currency);
+        return new HolderSimpleDto(holder);
     }
 }

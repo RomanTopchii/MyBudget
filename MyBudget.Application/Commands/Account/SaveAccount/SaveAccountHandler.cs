@@ -31,7 +31,7 @@ public record SaveAccountHandler(
         Domain.Account? account = null;
         if (request.Id != null)
         {
-            account = await this.AccountRepository.GetByIdAsync((Guid)request.Id);
+            account = await this.AccountRepository.GetRichByIdAsync((Guid)request.Id);
         }
 
         if (account == null)
