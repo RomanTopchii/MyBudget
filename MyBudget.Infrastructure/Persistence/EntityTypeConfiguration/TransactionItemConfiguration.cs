@@ -16,21 +16,21 @@ public class TransactionItemConfiguration : IEntityTypeConfiguration<Transaction
 
         builder.Property(x => x.Amount)
             .HasColumnName("amount")
-            .HasColumnType(SqlDataTypes.Float)
+            .HasColumnType(SqlDataTypes.DoublePrecision)
             .IsRequired();
 
         builder.Property(x => x.Type)
             .HasColumnName("type")
-            .HasColumnType(SqlDataTypes.SmallInt)
+            .HasColumnType(SqlDataTypes.Smallint)
             .IsRequired();
 
         builder.Property(x => x.AccountId)
             .HasColumnName("accountId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier)
+            .HasColumnType(SqlDataTypes.Uuid)
             .IsRequired();
 
         builder.Property(x => x.TransactionId)
             .HasColumnName("transactionId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
     }
 }

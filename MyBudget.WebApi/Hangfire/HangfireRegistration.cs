@@ -1,17 +1,19 @@
 using Hangfire;
+using Hangfire.PostgreSql;
 
 namespace MyBudget.WebApi.Hangfire;
 
 public static class HangfireRegistration
 {
-    public static void RegisterHangfireServices(this IServiceCollection services,
+    public static void AddHangfireServices(this IServiceCollection services,
         ConfigurationManager configurationManager)
     {
-        services.AddHangfire(configuration => configuration
+        var connectionString = configurationManager.GetConnectionString("DefaultConnection");
+        services.AddHangfire(config => config
             .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
             .UseSimpleAssemblyNameTypeSerializer()
             .UseRecommendedSerializerSettings()
-            .UseSqlServerStorage(configurationManager.GetConnectionString("HangfireConnection")));
+            .UsePostgreSqlStorage(options => options.UseNpgsqlConnection(connectionString)));
         services.AddHangfireServer();
         services.AddMvc();
     }

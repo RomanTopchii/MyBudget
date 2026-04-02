@@ -10,11 +10,9 @@
     <ItemGroup>
         <PackageReference Include="Hangfire.AspNetCore"/>
         <PackageReference Include="Hangfire.Core"/>
-        <PackageReference Include="Hangfire.SqlServer"/>
+        <PackageReference Include="Hangfire.PostgreSql" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
         <PackageReference Include="Microsoft.Data.SqlClient"/>
-        <PackageReference Include="Serilog.AspNetCore"/>
-        <PackageReference Include="Serilog.Sinks.MSSqlServer"/>
         <PackageReference Include="Swashbuckle.AspNetCore"/>
     </ItemGroup>
 

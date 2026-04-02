@@ -16,18 +16,18 @@ public class KeeperAuditConfiguration : IEntityTypeConfiguration<KeeperAudit>
 
         builder.Property(x => x.Name)
             .HasColumnName("name")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
 
         builder.Property(x => x.Name_MOD)
             .HasColumnName("name_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.Type)
             .HasColumnName("type")
-            .HasColumnType(SqlDataTypes.SmallInt);
+            .HasColumnType(SqlDataTypes.Smallint);
 
         builder.Property(x => x.Type_MOD)
             .HasColumnName("type_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
     }
 }

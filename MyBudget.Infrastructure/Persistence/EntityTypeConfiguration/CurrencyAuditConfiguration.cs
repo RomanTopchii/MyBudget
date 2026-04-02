@@ -16,26 +16,26 @@ public class CurrencyAuditConfiguration : IEntityTypeConfiguration<CurrencyAudit
 
         builder.Property(x => x.Code)
             .HasColumnName("code")
-            .HasColumnType(SqlDataTypes.NvarChar3);
+            .HasColumnType(SqlDataTypes.VarChar3);
 
         builder.Property(x => x.Code_MOD)
             .HasColumnName("code_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.Iso4217)
             .HasColumnName("iso4217")
-            .HasColumnType(SqlDataTypes.Int);
+            .HasColumnType(SqlDataTypes.Integer);
 
         builder.Property(x => x.Iso4217_MOD)
             .HasColumnName("iso4217_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.IsAccounting)
             .HasColumnName("isAccounting")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.IsAccounting_MOD)
             .HasColumnName("isAccounting_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
     }
 }

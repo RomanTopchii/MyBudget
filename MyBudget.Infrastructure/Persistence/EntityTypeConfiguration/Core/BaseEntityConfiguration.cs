@@ -11,26 +11,26 @@ public static class BaseEntityConfiguration
     {
         builder.Property(x => x.Id)
             .HasColumnName("id")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
         
         builder.Property(x => x.Active)
             .HasColumnName("active")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
         
         builder.Property(x => x.CreateDate)
             .HasColumnName("createDate")
-            .HasColumnType(SqlDataTypes.DateTime);
+            .HasColumnType(SqlDataTypes.Timestamp);
         
         builder.Property(x => x.CreatedBy)
             .HasColumnName("createdBy")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
         
         builder.Property(x => x.ModifyDate)
             .HasColumnName("modifyDate")
-            .HasColumnType(SqlDataTypes.DateTime);
+            .HasColumnType(SqlDataTypes.Timestamp);
         
         builder.Property(x => x.ModifiedBy)
             .HasColumnName("modifiedBy")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
     }
 }

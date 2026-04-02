@@ -16,33 +16,33 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         
         builder.Property(x => x.Name)
             .HasColumnName("name")
-            .HasColumnType(SqlDataTypes.NvarChar255)
+            .HasColumnType(SqlDataTypes.VarChar255)
             .IsRequired();
 
         builder.Property(x => x.ParentId)
             .HasColumnName("parentId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.TypeId)
             .HasColumnName("typeId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier)
+            .HasColumnType(SqlDataTypes.Uuid)
             .IsRequired();
 
         builder.Property(x => x.CurrencyId)
             .HasColumnName("currencyId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.HolderId)
             .HasColumnName("holderId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.KeeperId)
             .HasColumnName("keeperId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.LinkedAccountId)
             .HasColumnName("linkedAccountId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.HasMany(x => x.Children)
             .WithOne(x => x.Parent)

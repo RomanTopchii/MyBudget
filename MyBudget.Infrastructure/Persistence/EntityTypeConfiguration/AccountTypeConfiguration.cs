@@ -19,71 +19,71 @@ public class AccountTypeConfiguration : IEntityTypeConfiguration<AccountType>
 
         builder.Property(x => x.HasCurrency)
             .HasColumnName("hasCurrency")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.HasHolder)
             .HasColumnName("hasHolder")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.HasKeeper)
             .HasColumnName("hasKeeper")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.LinkedAccountTypeId)
             .HasColumnName("linkedAccountTypeId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.HasInitialBalance)
             .HasColumnName("hasInitialBalance")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.CalcFullTimeBalance)
             .HasColumnName("calcFullTimeBalance")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.CanBeDeleted)
             .HasColumnName("canBeDeleted")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.CanChangeActiveStatus)
             .HasColumnName("canChangeActiveStatus")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.CanBeRenamed)
             .HasColumnName("canBeRenamed")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.CanBeCreatedByUser)
             .HasColumnName("canBeCreatedByUser")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.CheckAmountBeforeDeactivate)
             .HasColumnName("checkAmountBeforeDeactivate")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.AllowsTransactions)
             .HasColumnName("allowsTransactions")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.Property(x => x.KeeperGroup)
             .HasColumnName("keeperGroup")
-            .HasColumnType(SqlDataTypes.SmallInt)
+            .HasColumnType(SqlDataTypes.Smallint)
             .IsRequired();
 
         builder.Property(x => x.Priority)
             .HasColumnName("priority")
-            .HasColumnType(SqlDataTypes.Int)
+            .HasColumnType(SqlDataTypes.Integer)
             .IsRequired();
 
         builder.HasMany(x => x.Accounts)

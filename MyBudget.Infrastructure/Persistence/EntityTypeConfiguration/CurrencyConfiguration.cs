@@ -16,16 +16,16 @@ public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
 
         builder.Property(x => x.Code)
             .HasColumnName("code")
-            .HasColumnType(SqlDataTypes.NvarChar3);
+            .HasColumnType(SqlDataTypes.VarChar3);
 
         builder.Property(x => x.Iso4217)
             .HasColumnName("iso4217")
-            .HasColumnType(SqlDataTypes.Int)
+            .HasColumnType(SqlDataTypes.Integer)
             .IsRequired();
 
         builder.Property(x => x.IsAccounting)
             .HasColumnName("isAccounting")
-            .HasColumnType(SqlDataTypes.Bit)
+            .HasColumnType(SqlDataTypes.Boolean)
             .IsRequired();
 
         builder.HasIndex(x => x.Code)

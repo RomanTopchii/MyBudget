@@ -13,7 +13,7 @@ public static class DictionaryEntityConfiguration
         
         builder.Property(x => x.Name)
             .HasColumnName("name")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
 
         builder.HasIndex(x => x.Name)
             .IsUnique();

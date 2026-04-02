@@ -16,21 +16,21 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
 
         builder.Property(x => x.Date)
             .HasColumnName("date")
-            .HasColumnType(SqlDataTypes.DateTime)
+            .HasColumnType(SqlDataTypes.Timestamp)
             .IsRequired();
 
         builder.Property(x => x.Status)
             .HasColumnName("status")
-            .HasColumnType(SqlDataTypes.SmallInt)
+            .HasColumnType(SqlDataTypes.Smallint)
             .IsRequired();
 
         builder.Property(x => x.Type)
             .HasColumnName("type")
-            .HasColumnType(SqlDataTypes.SmallInt)
+            .HasColumnType(SqlDataTypes.Smallint)
             .IsRequired();
 
         builder.Property(x => x.Comment)
             .HasColumnName("comment")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
     }
 }

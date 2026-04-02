@@ -11,49 +11,49 @@ public static class BaseEntityAuditConfiguration
     {
         builder.Property(x => x.Id)
             .HasColumnName("id")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.RevId)
             .HasColumnName("rev");
 
         builder.Property(x => x.Active)
             .HasColumnName("active")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.Active_MOD)
             .HasColumnName("active_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.CreateDate)
             .HasColumnName("createDate")
-            .HasColumnType(SqlDataTypes.DateTime);
+            .HasColumnType(SqlDataTypes.Timestamp);
 
         builder.Property(x => x.CreateDate_MOD)
             .HasColumnName("createDate_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.CreatedBy)
             .HasColumnName("createdBy")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
 
         builder.Property(x => x.CreatedBy_MOD)
             .HasColumnName("createdBy_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.ModifyDate)
             .HasColumnName("modifyDate")
-            .HasColumnType(SqlDataTypes.DateTime);
+            .HasColumnType(SqlDataTypes.Timestamp);
 
         builder.Property(x => x.ModifyDate_MOD)
             .HasColumnName("modifyDate_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.ModifiedBy)
             .HasColumnName("modifiedBy")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
 
         builder.Property(x => x.ModifiedBy_MOD)
             .HasColumnName("modifiedBy_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
     }
 }

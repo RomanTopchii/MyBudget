@@ -16,10 +16,10 @@ public class HolderAuditConfiguration : IEntityTypeConfiguration<HolderAudit>
 
         builder.Property(x => x.Name)
             .HasColumnName("name")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
 
         builder.Property(x => x.Name_MOD)
             .HasColumnName("name_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
     }
 }

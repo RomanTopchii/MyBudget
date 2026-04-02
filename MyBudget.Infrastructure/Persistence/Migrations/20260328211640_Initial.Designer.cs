@@ -2,84 +2,83 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBudget.Infrastructure.Persistence;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace MyBudget.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241020193808_ChangeCurrency")]
-    partial class ChangeCurrency
+    [Migration("20260328211640_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseCollation("Cyrillic_General_CI_AS")
-                .HasAnnotation("ProductVersion", "8.0.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("MyBudget.Domain.Account", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<Guid?>("CurrencyId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("currencyId");
 
                     b.Property<Guid?>("HolderId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("holderId");
 
                     b.Property<Guid?>("KeeperId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("keeperId");
 
                     b.Property<Guid?>("LinkedAccountId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("linkedAccountId");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<Guid?>("ParentId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("parentId");
 
                     b.Property<Guid>("TypeId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("typeId");
 
                     b.HasKey("Id");
@@ -103,95 +102,97 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool>("AllowsTransactions")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("allowsTransactions");
 
                     b.Property<bool>("CalcFullTimeBalance")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("calcFullTimeBalance");
 
                     b.Property<bool>("CanBeCreatedByUser")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeCreatedByUser");
 
                     b.Property<bool>("CanBeDeleted")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeDeleted");
 
                     b.Property<bool>("CanBeRenamed")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeRenamed");
 
                     b.Property<bool>("CanChangeActiveStatus")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canChangeActiveStatus");
 
                     b.Property<bool>("CheckAmountBeforeDeactivate")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("checkAmountBeforeDeactivate");
 
                     b.Property<int?>("Classification")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("classification");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool>("HasCurrency")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasCurrency");
 
                     b.Property<bool>("HasHolder")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasHolder");
 
                     b.Property<bool>("HasInitialBalance")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasInitialBalance");
 
                     b.Property<bool>("HasKeeper")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasKeeper");
-
-                    b.Property<bool>("HasLinkedAccount")
-                        .HasColumnType("bit")
-                        .HasColumnName("hasLinkedAccount");
 
                     b.Property<short>("KeeperGroup")
                         .HasColumnType("smallint")
                         .HasColumnName("keeperGroup");
 
+                    b.Property<Guid?>("LinkedAccountTypeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("linkedAccountTypeId");
+
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("priority");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LinkedAccountTypeId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -203,35 +204,35 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<Guid>("AncestorId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("ancestorId");
 
                     b.Property<Guid>("ChildId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("childId");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.HasKey("Id");
@@ -248,95 +249,95 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool?>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool?>("Active_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active_MOD");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<bool?>("CreateDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createDate_MOD");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool?>("CreatedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createdBy_MOD");
 
                     b.Property<Guid?>("CurrencyId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("currencyId");
 
                     b.Property<bool?>("CurrencyId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("currencyId_MOD");
 
                     b.Property<Guid?>("HolderId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("holderId");
 
                     b.Property<bool?>("HolderId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("holderId_MOD");
 
                     b.Property<Guid?>("KeeperId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("keeperId");
 
                     b.Property<bool?>("KeeperId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("keeperId_MOD");
 
                     b.Property<Guid?>("LinkedAccountId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("linkedAccountId");
 
                     b.Property<bool?>("LinkedAccountId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("linkedAccountId_MOD");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<bool?>("ModifiedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifiedBy_MOD");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<bool?>("ModifyDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifyDate_MOD");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<bool?>("Name_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("name_MOD");
 
                     b.Property<Guid?>("ParentId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("parentId");
 
                     b.Property<bool?>("ParentId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("parentId_MOD");
 
                     b.Property<long>("RevId")
@@ -344,14 +345,14 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("rev");
 
                     b.Property<int>("RevType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("TypeId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("typeId");
 
                     b.Property<bool?>("TypeId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("typeId_MOD");
 
                     b.HasKey("Id");
@@ -365,63 +366,63 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool?>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool?>("Active_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active_MOD");
 
                     b.Property<Guid?>("AncestorId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("ancestorId");
 
                     b.Property<bool?>("AncestorId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("ancestorId_MOD");
 
                     b.Property<Guid?>("ChildId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("childId");
 
                     b.Property<bool?>("ChildId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("childId_MOD");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<bool?>("CreateDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createDate_MOD");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool?>("CreatedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createdBy_MOD");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<bool?>("ModifiedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifiedBy_MOD");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<bool?>("ModifyDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifyDate_MOD");
 
                     b.Property<long>("RevId")
@@ -429,7 +430,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("rev");
 
                     b.Property<int>("RevType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -442,175 +443,175 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool?>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool?>("Active_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active_MOD");
 
                     b.Property<bool?>("AllowsTransactions")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("allowsTransactions");
 
                     b.Property<bool?>("AllowsTransactions_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("allowsTransactions_MOD");
 
                     b.Property<bool?>("CalcFullTimeBalance")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("calcFullTimeBalance");
 
                     b.Property<bool?>("CalcFullTimeBalance_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("calcFullTimeBalance_MOD");
 
                     b.Property<bool?>("CanBeCreatedByUser")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeCreatedByUser");
 
                     b.Property<bool?>("CanBeCreatedByUser_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeCreatedByUser_MOD");
 
                     b.Property<bool?>("CanBeDeleted")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeDeleted");
 
                     b.Property<bool?>("CanBeDeleted_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeDeleted_MOD");
 
                     b.Property<bool?>("CanBeRenamed")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeRenamed");
 
                     b.Property<bool?>("CanBeRenamed_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canBeRenamed_MOD");
 
                     b.Property<bool?>("CanChangeActiveStatus")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canChangeActiveStatus");
 
                     b.Property<bool?>("CanChangeActiveStatus_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("canChangeActiveStatus_MOD");
 
                     b.Property<bool?>("CheckAmountBeforeDeactivate")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("checkAmountBeforeDeactivate");
 
                     b.Property<bool?>("CheckAmountBeforeDeactivate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("checkAmountBeforeDeactivate_MOD");
 
                     b.Property<int?>("Classification")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("classification");
 
                     b.Property<bool?>("Classification_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("classification_MOD");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<bool?>("CreateDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createDate_MOD");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool?>("CreatedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createdBy_MOD");
 
                     b.Property<bool?>("HasCurrency")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasCurrency");
 
                     b.Property<bool?>("HasCurrency_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasCurrency_MOD");
 
                     b.Property<bool?>("HasHolder")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasHolder");
 
                     b.Property<bool?>("HasHolder_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasHolder_MOD");
 
                     b.Property<bool?>("HasInitialBalance")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasInitialBalance");
 
                     b.Property<bool?>("HasInitialBalance_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasInitialBalance_MOD");
 
                     b.Property<bool?>("HasKeeper")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasKeeper");
 
                     b.Property<bool?>("HasKeeper_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("hasKeeper_MOD");
-
-                    b.Property<bool?>("HasLinkedAccount")
-                        .HasColumnType("bit")
-                        .HasColumnName("hasLinkedAccount");
-
-                    b.Property<bool?>("HasLinkedAccount_MOD")
-                        .HasColumnType("bit")
-                        .HasColumnName("hasLinkedAccount_MOD");
 
                     b.Property<short?>("KeeperGroup")
                         .HasColumnType("smallint")
                         .HasColumnName("keeperGroup");
 
                     b.Property<bool?>("KeeperGroup_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("keeperGroup_MOD");
 
+                    b.Property<Guid?>("LinkedAccountTypeId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("linkedAccountTypeId");
+
+                    b.Property<bool?>("LinkedAccountTypeId_MOD")
+                        .HasColumnType("boolean")
+                        .HasColumnName("linkedAccountTypeId_MOD");
+
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<bool?>("ModifiedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifiedBy_MOD");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<bool?>("ModifyDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifyDate_MOD");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<bool?>("Name_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("name_MOD");
 
                     b.Property<int?>("Priority")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("priority");
 
                     b.Property<bool?>("Priority_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("priority_MOD");
 
                     b.Property<long>("RevId")
@@ -618,7 +619,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("rev");
 
                     b.Property<int>("RevType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -634,14 +635,14 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Author")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("autor");
 
                     b.Property<DateTime>("RevisionDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("revisionDate");
 
                     b.HasKey("Id");
@@ -653,71 +654,71 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool?>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool?>("Active_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active_MOD");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(3)")
+                        .HasColumnType("varchar(3)")
                         .HasColumnName("code");
 
                     b.Property<bool?>("Code_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("code_MOD");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<bool?>("CreateDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createDate_MOD");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool?>("CreatedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createdBy_MOD");
 
                     b.Property<bool?>("IsAccounting")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("isAccounting");
 
                     b.Property<bool?>("IsAccounting_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("isAccounting_MOD");
 
                     b.Property<int?>("Iso4217")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("iso4217");
 
                     b.Property<bool?>("Iso4217_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("iso4217_MOD");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<bool?>("ModifiedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifiedBy_MOD");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<bool?>("ModifyDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifyDate_MOD");
 
                     b.Property<long>("RevId")
@@ -725,7 +726,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("rev");
 
                     b.Property<int>("RevType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -738,55 +739,55 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool?>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool?>("Active_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active_MOD");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<bool?>("CreateDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createDate_MOD");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool?>("CreatedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createdBy_MOD");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<bool?>("ModifiedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifiedBy_MOD");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<bool?>("ModifyDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifyDate_MOD");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<bool?>("Name_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("name_MOD");
 
                     b.Property<long>("RevId")
@@ -794,7 +795,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("rev");
 
                     b.Property<int>("RevType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -807,55 +808,55 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool?>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool?>("Active_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active_MOD");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<bool?>("CreateDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createDate_MOD");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool?>("CreatedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createdBy_MOD");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<bool?>("ModifiedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifiedBy_MOD");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<bool?>("ModifyDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifyDate_MOD");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<bool?>("Name_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("name_MOD");
 
                     b.Property<long>("RevId")
@@ -863,14 +864,14 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("rev");
 
                     b.Property<int>("RevType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<short?>("Type")
                         .HasColumnType("smallint")
                         .HasColumnName("type");
 
                     b.Property<bool?>("Type_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("type_MOD");
 
                     b.HasKey("Id");
@@ -884,63 +885,63 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool?>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool?>("Active_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active_MOD");
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("comment");
 
                     b.Property<bool?>("Comment_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("comment_MOD");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<bool?>("CreateDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createDate_MOD");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool?>("CreatedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createdBy_MOD");
 
                     b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("date");
 
                     b.Property<bool?>("Date_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("date_MOD");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<bool?>("ModifiedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifiedBy_MOD");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<bool?>("ModifyDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifyDate_MOD");
 
                     b.Property<long>("RevId")
@@ -948,14 +949,14 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("rev");
 
                     b.Property<int>("RevType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<short?>("Status")
                         .HasColumnType("smallint")
                         .HasColumnName("status");
 
                     b.Property<bool?>("Status_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("status_MOD");
 
                     b.Property<short?>("Type")
@@ -963,7 +964,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("type");
 
                     b.Property<bool?>("Type_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("type_MOD");
 
                     b.HasKey("Id");
@@ -977,66 +978,66 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<Guid?>("AccountId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("accountId");
 
                     b.Property<bool?>("AccountId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("accountId_MOD");
 
                     b.Property<bool?>("Account_MOD")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool?>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<bool?>("Active_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active_MOD");
 
                     b.Property<double?>("Amount")
-                        .HasColumnType("float")
+                        .HasColumnType("double precision")
                         .HasColumnName("amount");
 
                     b.Property<bool?>("Amount_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("amount_MOD");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<bool?>("CreateDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createDate_MOD");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool?>("CreatedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("createdBy_MOD");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<bool?>("ModifiedBy_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifiedBy_MOD");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<bool?>("ModifyDate_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("modifyDate_MOD");
 
                     b.Property<long>("RevId")
@@ -1044,14 +1045,14 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("rev");
 
                     b.Property<int>("RevType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("TransactionId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("transactionId");
 
                     b.Property<bool?>("TransactionId_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("transactionId_MOD");
 
                     b.Property<short?>("Type")
@@ -1059,7 +1060,7 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                         .HasColumnName("type");
 
                     b.Property<bool?>("Type_MOD")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("type_MOD");
 
                     b.HasKey("Id");
@@ -1075,40 +1076,40 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(3)")
+                        .HasColumnType("varchar(3)")
                         .HasColumnName("code");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<bool>("IsAccounting")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("isAccounting");
 
                     b.Property<int>("Iso4217")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("iso4217");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.HasKey("Id");
@@ -1126,32 +1127,32 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.HasKey("Id");
@@ -1166,32 +1167,32 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<short>("Type")
@@ -1210,35 +1211,35 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("comment");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("date");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<short>("Status")
@@ -1258,39 +1259,39 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
 
                     b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("accountId");
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasColumnName("active");
 
                     b.Property<double>("Amount")
-                        .HasColumnType("float")
+                        .HasColumnType("double precision")
                         .HasColumnName("amount");
 
                     b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("createDate");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("createdBy");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("modifiedBy");
 
                     b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime")
+                        .HasColumnType("timestamp")
                         .HasColumnName("modifyDate");
 
                     b.Property<Guid>("TransactionId")
-                        .HasColumnType("uniqueidentifier")
+                        .HasColumnType("uuid")
                         .HasColumnName("transactionId");
 
                     b.Property<short>("Type")
@@ -1349,6 +1350,15 @@ namespace MyBudget.Infrastructure.Persistence.Migrations
                     b.Navigation("Parent");
 
                     b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("MyBudget.Domain.AccountType", b =>
+                {
+                    b.HasOne("MyBudget.Domain.AccountType", "LinkedAccountType")
+                        .WithMany()
+                        .HasForeignKey("LinkedAccountTypeId");
+
+                    b.Navigation("LinkedAccountType");
                 });
 
             modelBuilder.Entity("MyBudget.Domain.AccountTypeAccountTypeLink", b =>

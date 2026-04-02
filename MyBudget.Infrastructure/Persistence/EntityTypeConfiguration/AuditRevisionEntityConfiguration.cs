@@ -19,11 +19,11 @@ public class AuditRevisionEntityConfiguration : IEntityTypeConfiguration<AuditRe
 
         builder.Property(x => x.RevisionDate)
             .HasColumnName("revisionDate")
-            .HasColumnType(SqlDataTypes.DateTime)
+            .HasColumnType(SqlDataTypes.Timestamp)
             .IsRequired();
 
         builder.Property(x => x.Author)
             .HasColumnName("autor")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
     }
 }

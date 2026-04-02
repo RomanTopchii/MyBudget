@@ -16,7 +16,7 @@ public class KeeperConfiguration : IEntityTypeConfiguration<Keeper>
 
         builder.Property(x => x.Type)
             .HasColumnName("type")
-            .HasColumnType(SqlDataTypes.SmallInt)
+            .HasColumnType(SqlDataTypes.Smallint)
             .IsRequired();
 
         builder.HasMany(x => x.Accounts)

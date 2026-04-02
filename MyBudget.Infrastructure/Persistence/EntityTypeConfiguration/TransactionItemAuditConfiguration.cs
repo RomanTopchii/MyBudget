@@ -16,34 +16,34 @@ public class TransactionItemAuditConfiguration : IEntityTypeConfiguration<Transa
 
         builder.Property(x => x.Amount)
             .HasColumnName("amount")
-            .HasColumnType(SqlDataTypes.Float);
+            .HasColumnType(SqlDataTypes.DoublePrecision);
 
         builder.Property(x => x.Amount_MOD)
             .HasColumnName("amount_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.Type)
             .HasColumnName("type")
-            .HasColumnType(SqlDataTypes.SmallInt);
+            .HasColumnType(SqlDataTypes.Smallint);
 
         builder.Property(x => x.Type_MOD)
             .HasColumnName("type_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.AccountId)
             .HasColumnName("accountId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.AccountId_MOD)
             .HasColumnName("accountId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.TransactionId)
             .HasColumnName("transactionId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.TransactionId_MOD)
             .HasColumnName("transactionId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
     }
 }

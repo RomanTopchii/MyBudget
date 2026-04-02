@@ -1,50 +1,41 @@
 using MyBudget.WebApi;
 using MyBudget.WebApi.Hangfire;
-using Serilog;
-using Serilog.Sinks.MSSqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.RegisterApplicationsServices(builder.Configuration);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.RegisterHangfireServices(builder.Configuration);
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-// builder.Host.UseSerilog((_, _, configuration) =>
-// {
-//     var sinkOptions = new MSSqlServerSinkOptions
-//     {
-//         AutoCreateSqlDatabase = true,
-//         AutoCreateSqlTable = true,
-//         TableName = "Log"
-//     };
-//
-//     configuration
-//         .MinimumLevel.Error()
-//         .WriteTo.MSSqlServer(connectionString, sinkOptions);
-// });
+ConfigureServices(builder);
 
 var app = builder.Build();
+ConfigureMiddleware(app);
+ConfigureHangfire(app);
+app.Run();
 
-MyBudget.Infrastructure.Startup.Configure(app.Services);
 
-app.UseMiddleware<Middleware>();
-
-if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+static void ConfigureServices(WebApplicationBuilder builder)
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    builder.Services.RegisterApplicationsServices(builder.Configuration);
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddHangfireServices(builder.Configuration);
 }
 
-app.UseRouting();
-//app.UseAuthorization();
-app.MapControllers();
+static void ConfigureMiddleware(WebApplication app)
+{
+    MyBudget.Infrastructure.Startup.Configure(app.Services);
+    app.UseMiddleware<Middleware>();
 
-app.RegisterHangfireDashboard();
-app.RegisterHangfireJobs();
+    if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
-app.Run();
+    app.UseRouting();
+    // app.UseAuthorization();
+    app.MapControllers();
+}
+
+static void ConfigureHangfire(WebApplication app)
+{
+    app.RegisterHangfireDashboard();
+    app.RegisterHangfireJobs();
+}

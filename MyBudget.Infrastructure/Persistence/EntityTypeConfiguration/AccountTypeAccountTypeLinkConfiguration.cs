@@ -16,11 +16,11 @@ public class AccountTypeAccountTypeLinkConfiguration : IEntityTypeConfiguration<
 
         builder.Property(x => x.AncestorId)
             .HasColumnName("ancestorId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.ChildId)
             .HasColumnName("childId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier)
+            .HasColumnType(SqlDataTypes.Uuid)
             .IsRequired();
 
         builder.HasIndex(x => new { x.AncestorId, x.ChildId })

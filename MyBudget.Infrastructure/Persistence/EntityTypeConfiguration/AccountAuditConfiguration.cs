@@ -17,58 +17,58 @@ public class AccountAuditConfiguration : IEntityTypeConfiguration<AccountAudit>
 
         builder.Property(x => x.Name)
             .HasColumnName("name")
-            .HasColumnType(SqlDataTypes.NvarChar255);
+            .HasColumnType(SqlDataTypes.VarChar255);
 
         builder.Property(x => x.Name_MOD)
             .HasColumnName("name_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.ParentId)
             .HasColumnName("parentId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.ParentId_MOD)
             .HasColumnName("parentId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.TypeId)
             .HasColumnName("typeId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.TypeId_MOD)
             .HasColumnName("typeId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.CurrencyId)
             .HasColumnName("currencyId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.CurrencyId_MOD)
             .HasColumnName("currencyId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.HolderId)
             .HasColumnName("holderId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.HolderId_MOD)
             .HasColumnName("holderId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.KeeperId)
             .HasColumnName("keeperId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.KeeperId_MOD)
             .HasColumnName("keeperId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.LinkedAccountId)
             .HasColumnName("linkedAccountId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.LinkedAccountId_MOD)
             .HasColumnName("linkedAccountId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
     }
 }

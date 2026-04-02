@@ -17,18 +17,18 @@ public class AccountTypeAccountTypeLinkAuditConfiguration : IEntityTypeConfigura
 
         builder.Property(x => x.AncestorId)
             .HasColumnName("ancestorId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.AncestorId_MOD)
             .HasColumnName("ancestorId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
 
         builder.Property(x => x.ChildId)
             .HasColumnName("childId")
-            .HasColumnType(SqlDataTypes.Uniqueidentifier);
+            .HasColumnType(SqlDataTypes.Uuid);
 
         builder.Property(x => x.ChildId_MOD)
             .HasColumnName("childId_MOD")
-            .HasColumnType(SqlDataTypes.Bit);
+            .HasColumnType(SqlDataTypes.Boolean);
     }
 }
