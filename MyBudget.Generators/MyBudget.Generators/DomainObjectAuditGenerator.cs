@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -8,13 +9,12 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace MyBudget.Generators;
 
-[Generator]
-public class DomainObjectAuditGenerator : ISourceGenerator
+[Generator(LanguageNames.CSharp)]
+public class DomainObjectAuditGenerator : IIncrementalGenerator
 {
     private const string DomainObjectsProject = "MyBudget.Domain";
 
-
-    public void Initialize(GeneratorInitializationContext context)
+    public void Initialize(IncrementalGeneratorInitializationContext context)
     {
 #if DEBUG
         if (!Debugger.IsAttached)
@@ -22,106 +22,116 @@ public class DomainObjectAuditGenerator : ISourceGenerator
             Debugger.Launch();
         }
 #endif
+        // 1. Generate Static Files once
+        context.RegisterPostInitializationOutput(i =>
+        {
+            i.AddSource("AuditRevisionEntity.g.cs", SourceText.From(GetAuditRevisionEntityDeclaration, Encoding.UTF8));
+            i.AddSource("BaseEntityAudit.g.cs", SourceText.From(GetBaseEntityAuditDeclaration, Encoding.UTF8));
+            i.AddSource("RevisionType.g.cs", SourceText.From(GetRevisionTypeDeclaration, Encoding.UTF8));
+        });
+
+        // 2. Filter for Classes with [Auditable] attribute
+        IncrementalValuesProvider<TypeDeclarationSyntax> classDeclarations = context.SyntaxProvider
+            .CreateSyntaxProvider(
+                predicate: static (s, _) => IsSyntaxTargetForGeneration(s),
+                transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx))
+            .Where(static m => m is not null)!;
+
+        // 3. Combine with Compilation to perform generation
+        IncrementalValueProvider<(Compilation, ImmutableArray<TypeDeclarationSyntax>)> compilationAndClasses = 
+            context.CompilationProvider.Combine(classDeclarations.Collect());
+
+        context.RegisterSourceOutput(compilationAndClasses, static (spc, source) => Execute(source.Item1, source.Item2, spc));
     }
 
-    public void Execute(GeneratorExecutionContext context)
+    private static bool IsSyntaxTargetForGeneration(SyntaxNode node) =>
+        node is TypeDeclarationSyntax tds && tds.AttributeLists.Count > 0;
+
+    private static TypeDeclarationSyntax? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
     {
-        var syntaxTrees = context.Compilation.SyntaxTrees.ToList();
-
-        if (syntaxTrees.Any(x => x.FilePath.Contains(DomainObjectsProject)))
+        var typeDeclaration = (TypeDeclarationSyntax)context.Node;
+        foreach (AttributeListSyntax attributeList in typeDeclaration.AttributeLists)
         {
-            context.AddSource($"AuditRevisionEntity.g.cs",
-                SourceText.From(GetAuditRevisionEntityDeclaration, Encoding.UTF8));
-            context.AddSource("BaseEntityAudit.g.cs",
-                SourceText.From(GetBaseEntityAuditDeclaration, Encoding.UTF8));
-            context.AddSource("RevisionType.g.cs",
-                SourceText.From(GetRevisionTypeDeclaration, Encoding.UTF8));
-        }
-
-        foreach (var syntaxTree in syntaxTrees)
-        {
-            var auditableTypeDeclarations = syntaxTree.GetRoot()
-                .DescendantNodes()
-                .OfType<TypeDeclarationSyntax>()
-                .Where(x => x.AttributeLists.Any(a => a.ToString().StartsWith("[Auditable")))
-                .ToList();
-
-            foreach (var auditableTypeDeclaration in auditableTypeDeclarations)
+            foreach (AttributeSyntax attribute in attributeList.Attributes)
             {
-                var usingDirectives = syntaxTree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>();
-                var usingDirectivesAsText = string.Join("\r\n", usingDirectives);
-                var sourceBuilder = new StringBuilder(usingDirectivesAsText);
-
-                var className = auditableTypeDeclaration.Identifier.ToString();
-                var generatedClassName = $"{className}Audit";
-
-                var classTypeSymbol = context.Compilation.GetTypeByMetadataName($"MyBudget.Domain.{className}");
-                if (classTypeSymbol != null)
-                {
-                    sourceBuilder.Append(GetAuditClassDeclaration(classTypeSymbol, generatedClassName));
-
-                    context.AddSource($"{generatedClassName}.g.cs",
-                        SourceText.From(sourceBuilder.ToString(), Encoding.UTF8));
-                }
+                if (attribute.Name.ToString().Contains("Auditable"))
+                    return typeDeclaration;
             }
         }
+        return null;
     }
 
-    private string GetAuditClassDeclaration(INamedTypeSymbol classTypeSymbol, string generatedClassName)
+    private static void Execute(Compilation compilation, ImmutableArray<TypeDeclarationSyntax> classes, SourceProductionContext context)
+    {
+        if (classes.IsDefaultOrEmpty) return;
+
+        foreach (var typeDecl in classes)
+        {
+            var semanticModel = compilation.GetSemanticModel(typeDecl.SyntaxTree);
+            if (semanticModel.GetDeclaredSymbol(typeDecl) is not INamedTypeSymbol classSymbol) continue;
+
+            var className = classSymbol.Name;
+            var generatedClassName = $"{className}Audit";
+
+            // Extract usings from original file
+            var usings = string.Join("\r\n", typeDecl.SyntaxTree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>());
+            var sourceBuilder = new StringBuilder(usings);
+
+            sourceBuilder.Append(GetAuditClassDeclaration(classSymbol, generatedClassName));
+
+            context.AddSource($"{generatedClassName}.g.cs", SourceText.From(sourceBuilder.ToString(), Encoding.UTF8));
+        }
+    }
+
+    private static string GetAuditClassDeclaration(INamedTypeSymbol classTypeSymbol, string generatedClassName)
     {
         var sourceBuilder = new StringBuilder();
-
         var baseTypes = new List<INamedTypeSymbol>();
         INamedTypeSymbol? currentType = classTypeSymbol;
+
         while (currentType != null)
         {
             if (!currentType.Name.Contains("BaseEntity"))
-            {
                 baseTypes.Add(currentType);
-            }
-
             currentType = currentType.BaseType;
         }
 
-        baseTypes.Reverse(); // Reversing to get base types in the inheritance hierarchy order
+        baseTypes.Reverse();
 
         sourceBuilder.Append($@"
-
-namespace MyBudget.Domain.Audit.Generated 
+namespace MyBudget.Domain.Audit.Generated
 {{
-    public class {generatedClassName}: BaseEntityAudit
+    public class {generatedClassName} : BaseEntityAudit
     {{");
 
         foreach (var baseType in baseTypes)
         {
-            List<IPropertySymbol> properties = new List<IPropertySymbol>();
-            foreach (var member in baseType.GetMembers())
-            {
-                if (member.Kind == SymbolKind.Property)
-                {
-                    properties.Add((IPropertySymbol)member);
-                }
-            }
-
+            var properties = baseType.GetMembers().OfType<IPropertySymbol>();
             foreach (var property in properties.Where(x => !x.IsVirtual && !x.Name.Equals("Id")))
             {
-                sourceBuilder.Append(this.GetPropertiesDeclarationsString(property));
+                sourceBuilder.Append(GetPropertiesDeclarationsString(property));
             }
         }
 
-        sourceBuilder.Append("\n\t}\n}");
-
+        sourceBuilder.Append("\n    }\n}");
         return sourceBuilder.ToString();
     }
-
-    private string GetPropertiesDeclarationsString(IPropertySymbol property)
+    
+    private static string GetPropertiesDeclarationsString(IPropertySymbol property)
     {
-        var propertyTypeString = property.Type.ToString().Replace("?", "");
+        ITypeSymbol type = property.Type;
+
+        if (type is INamedTypeSymbol namedType && 
+            namedType.OriginalDefinition.SpecialType == SpecialType.System_Nullable_T)
+        {
+            type = namedType.TypeArguments[0];
+        }
+
+        var typeName = type.WithNullableAnnotation(NullableAnnotation.None).ToDisplayString();
 
         return $@"
-
-        public {propertyTypeString}? {property.Name} {{ get; set; }}
-        public bool? {property.Name + "_MOD"} {{ get; set; }}";
+        public {typeName}? {property.Name} {{ get; set; }}
+        public bool? {property.Name}_MOD {{ get; set; }}";
     }
 
     private const string GetAuditRevisionEntityDeclaration =
