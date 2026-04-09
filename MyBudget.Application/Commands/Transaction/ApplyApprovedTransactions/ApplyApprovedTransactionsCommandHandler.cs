@@ -13,7 +13,8 @@ public record ApplyApprovedTransactionsHandler(
     public async Task Handle(ApplyApprovedTransactions request, CancellationToken cancellationToken)
     {
         var approvedTransactions = this.TransactionRepository.Query()
-            .Where(x => x.Status == TransactionStatus.Approved);
+            .Where(x => x.Status == TransactionStatus.Approved 
+                        && x.Date <= DateTime.Now);
 
         foreach (var transaction in approvedTransactions)
         {
