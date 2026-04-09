@@ -6,7 +6,7 @@ namespace MyBudget.Application.Interfaces.Dto;
 public class TransactionItemDto : IdentifiableDto
 {
 
-    public AccountSimpleDto Account { get; set; }
+    public AccountPoorDto Account { get; set; }
 
     public Double Amount { get; set; }
 
@@ -14,7 +14,7 @@ public class TransactionItemDto : IdentifiableDto
 
     public TransactionItemDto(Domain.TransactionItem domain) : base(domain)
     {
-        this.Account = new AccountSimpleDto(domain.Account);
+        this.Account = new AccountPoorDto(domain.Account);
         this.Amount = domain.Amount;
         this.Type = domain.Type;
     }

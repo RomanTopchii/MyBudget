@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrencyService} from '../shared/http-services/currency.service';
 import {HttpClient} from '@angular/common/http';
-import {CurrencySimpleDto, KeeperSimpleDto} from '../shared/http-services/responses';
+import {KeeperSimpleDto} from '../shared/http-services/responses';
 import {
   GridModule,
   SelectableSettings

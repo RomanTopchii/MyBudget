@@ -1,9 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MyBudget.Application.Commands.Account.ImportAccountsWithRelativeObjects;
 using MyBudget.Application.Commands.Account.SaveAccount;
 using MyBudget.Application.Interfaces.Dto;
 using MyBudget.Application.Queries.Account.GetAccountById;
-using MyBudget.Application.Queries.Account.GetAccounts;
+using MyBudget.Application.Queries.Account.GetAccountsTree;
 
 namespace MyBudget.WebApi.Controllers;
 
@@ -15,9 +16,13 @@ public class AccountController(IMediator mediator) : ControllerBase
     public Task SaveAccount(SaveAccount model, CancellationToken cancellationToken) 
         => mediator.Send(model, cancellationToken);
     
+    [HttpPost("ImportAccountsWithRelativeObjects")]
+    public Task SaveAccount(List<ImportAccount> model, CancellationToken cancellationToken) 
+        => mediator.Send(new ImportAccountsWithRelativeObjects(List: model), cancellationToken);
+    
     [HttpGet]
-    public Task<List<AccountRichDto>> GetAccounts(CancellationToken cancellationToken) =>
-        mediator.Send(new GetAccounts(), cancellationToken);
+    public Task<AccountPoorDto?> GetAccountsTree(CancellationToken cancellationToken) =>
+        mediator.Send(new GetAccountsTree(), cancellationToken);
 
     [HttpGet("{id}")]
     public Task<AccountRichDto> GetAccountById([FromRoute] Guid id, CancellationToken cancellationToken) =>

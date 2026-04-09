@@ -21,5 +21,5 @@ public interface IRepository<T>
 
     void RemoveRange(IEnumerable<T> entities);
 
-    IQueryable<T> Query();
+    IQueryable<T> Query(bool readOnly = false);
 }
